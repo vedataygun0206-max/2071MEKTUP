@@ -27,7 +27,11 @@ function uuid() {
 
 function base64url(bytes) {
   let binary = "";
-  for (const b of bytes) binary += String.fromCharCode(b);
+
+  for (const b of bytes) {
+    binary += String.fromCharCode(b);
+  }
+
   return btoa(binary)
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
@@ -35,8 +39,13 @@ function base64url(bytes) {
 }
 
 function base64urlDecode(str) {
-  str = str.replace(/-/g, "+").replace(/_/g, "/");
-  while (str.length % 4) str += "=";
+  str = str
+    .replace(/-/g, "+")
+    .replace(/_/g, "/");
+
+  while (str.length % 4) {
+    str += "=";
+  }
 
   const binary = atob(str);
   const bytes = new Uint8Array(binary.length);
@@ -51,46 +60,59 @@ function base64urlDecode(str) {
 async function derivePassword(password, salt) {
   const encoder = new TextEncoder();
 
-  const keyMaterial = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(password),
-    "PBKDF2",
-    false,
-    ["deriveBits"]
-  );
+  const keyMaterial =
+    await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(password),
+      "PBKDF2",
+      false,
+      ["deriveBits"]
+    );
 
-  const bits = await crypto.subtle.deriveBits(
-    {
-      name: "PBKDF2",
-      salt,
-      iterations: PBKDF2_ITERATIONS,
-      hash: "SHA-256",
-    },
-    keyMaterial,
-    256
-  );
+  const bits =
+    await crypto.subtle.deriveBits(
+      {
+        name: "PBKDF2",
+        salt,
+        iterations: PBKDF2_ITERATIONS,
+        hash: "SHA-256",
+      },
+      keyMaterial,
+      256
+    );
 
   return new Uint8Array(bits);
 }
 
 async function hashPassword(password) {
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const hash = await derivePassword(password, salt);
+  const salt =
+    crypto.getRandomValues(
+      new Uint8Array(16)
+    );
+
+  const hash =
+    await derivePassword(
+      password,
+      salt
+    );
 
   return `${base64url(salt)}.${base64url(hash)}`;
 }
+
 function generatePassword(length = 16) {
   const chars =
     "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";
 
-  const bytes = crypto.getRandomValues(
-    new Uint8Array(length)
-  );
+  const bytes =
+    crypto.getRandomValues(
+      new Uint8Array(length)
+    );
 
   let password = "";
 
   for (let i = 0; i < length; i++) {
-    password += chars[bytes[i] % chars.length];
+    password +=
+      chars[bytes[i] % chars.length];
   }
 
   return password;
@@ -100,9 +122,10 @@ function generateRecoveryKey() {
   const chars =
     "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-  const bytes = crypto.getRandomValues(
-    new Uint8Array(20)
-  );
+  const bytes =
+    crypto.getRandomValues(
+      new Uint8Array(20)
+    );
 
   let key = "";
 
@@ -111,88 +134,86 @@ function generateRecoveryKey() {
       key += "-";
     }
 
-    key += chars[bytes[i] % chars.length];
+    key +=
+      chars[bytes[i] % chars.length];
   }
 
   return key;
 }
 
 async function hashText(text) {
-  const data = new TextEncoder().encode(text);
+  const data =
+    new TextEncoder().encode(text);
 
-  const hash = await crypto.subtle.digest(
-    "SHA-256",
-    data
-  );
+  const hash =
+    await crypto.subtle.digest(
+      "SHA-256",
+      data
+    );
 
   return base64url(
     new Uint8Array(hash)
   );
 }
-async function verifyPassword(password, stored) {
+
+async function verifyPassword(
+  password,
+  stored
+) {
   try {
-    const parts = stored.split(".");
+    const parts =
+      stored.split(".");
 
-    if (parts.length !== 2) return false;
+    if (parts.length !== 2) {
+      return false;
+    }
 
-    const salt = base64urlDecode(parts[0]);
-    const expected = base64urlDecode(parts[1]);
+    const salt =
+      base64urlDecode(parts[0]);
 
-    const actual = await derivePassword(password, salt);
+    const expected =
+      base64urlDecode(parts[1]);
 
-    if (actual.length !== expected.length) return false;
+    const actual =
+      await derivePassword(
+        password,
+        salt
+      );
+
+    if (
+      actual.length !==
+      expected.length
+    ) {
+      return false;
+    }
 
     let result = 0;
 
-    for (let i = 0; i < actual.length; i++) {
-      result |= actual[i] ^ expected[i];
+    for (
+      let i = 0;
+      i < actual.length;
+      i++
+    ) {
+      result |=
+        actual[i] ^ expected[i];
     }
 
     return result === 0;
+
   } catch {
     return false;
   }
 }
 
-async function signToken(payload, secret) {
-  const encoder = new TextEncoder();
+async function signToken(
+  payload,
+  secret
+) {
+  const encoder =
+    new TextEncoder();
 
-  const key = await crypto.subtle.importKey(
-    "raw",
-    encoder.encode(secret),
-    {
-      name: "HMAC",
-      hash: "SHA-256",
-    },
-    false,
-    ["sign"]
-  );
-
-  const body = base64url(
-    encoder.encode(JSON.stringify(payload))
-  );
-
-  const signature = await crypto.subtle.sign(
-    "HMAC",
-    key,
-    encoder.encode(body)
-  );
-
-  return `${body}.${base64url(new Uint8Array(signature))}`;
-}
-
-async function verifyToken(token, secret) {
-  try {
-    const parts = token.split(".");
-
-    if (parts.length !== 2) return null;
-
-    const body = parts[0];
-    const signature = base64urlDecode(parts[1]);
-
-    const encoder = new TextEncoder();
-
-    const key = await crypto.subtle.importKey(
+  const key =
+    await crypto.subtle.importKey(
       "raw",
       encoder.encode(secret),
       {
@@ -200,83 +221,177 @@ async function verifyToken(token, secret) {
         hash: "SHA-256",
       },
       false,
-      ["verify"]
+      ["sign"]
     );
 
-    const valid = await crypto.subtle.verify(
-      "HMAC",
-      key,
-      signature,
-      encoder.encode(body)
-    );
-
-    if (!valid) return null;
-
-    const payload = JSON.parse(
-      new TextDecoder().decode(
-        base64urlDecode(body)
+  const body =
+    base64url(
+      encoder.encode(
+        JSON.stringify(payload)
       )
     );
 
-    if (!payload.exp || payload.exp < Date.now()) {
+  const signature =
+    await crypto.subtle.sign(
+      "HMAC",
+      key,
+      encoder.encode(body)
+    );
+
+  return `${body}.${base64url(
+    new Uint8Array(signature)
+  )}`;
+}
+
+async function verifyToken(
+  token,
+  secret
+) {
+  try {
+    const parts =
+      token.split(".");
+
+    if (parts.length !== 2) {
+      return null;
+    }
+
+    const body = parts[0];
+
+    const signature =
+      base64urlDecode(parts[1]);
+
+    const encoder =
+      new TextEncoder();
+
+    const key =
+      await crypto.subtle.importKey(
+        "raw",
+        encoder.encode(secret),
+        {
+          name: "HMAC",
+          hash: "SHA-256",
+        },
+        false,
+        ["verify"]
+      );
+
+    const valid =
+      await crypto.subtle.verify(
+        "HMAC",
+        key,
+        signature,
+        encoder.encode(body)
+      );
+
+    if (!valid) {
+      return null;
+    }
+
+    const payload =
+      JSON.parse(
+        new TextDecoder().decode(
+          base64urlDecode(body)
+        )
+      );
+
+    if (
+      !payload.exp ||
+      payload.exp < Date.now()
+    ) {
       return null;
     }
 
     return payload;
+
   } catch {
     return null;
   }
 }
 
 function getToken(request) {
-  const auth = request.headers.get("Authorization");
+  const auth =
+    request.headers.get(
+      "Authorization"
+    );
 
-  if (!auth) return null;
-
-  if (!auth.startsWith("Bearer ")) {
+  if (!auth) {
     return null;
   }
 
-  return auth.substring(7).trim();
+  if (
+    !auth.startsWith("Bearer ")
+  ) {
+    return null;
+  }
+
+  return auth
+    .substring(7)
+    .trim();
 }
 
-async function requireUser(request, env) {
-  const token = getToken(request);
+async function requireUser(
+  request,
+  env
+) {
+  const token =
+    getToken(request);
 
   if (!token) {
     return {
-      error: error("Oturum gerekli", 401),
+      error: error(
+        "Oturum gerekli",
+        401
+      ),
     };
   }
 
   if (!env.AUTH_SECRET) {
     return {
-      error: error("AUTH_SECRET yapılandırılmamış", 500),
+      error: error(
+        "AUTH_SECRET yapılandırılmamış",
+        500
+      ),
     };
   }
 
-  const payload = await verifyToken(
-    token,
-    env.AUTH_SECRET
-  );
+  const payload =
+    await verifyToken(
+      token,
+      env.AUTH_SECRET
+    );
 
-  if (!payload || !payload.user_id) {
+  if (
+    !payload ||
+    !payload.user_id
+  ) {
     return {
-      error: error("Geçersiz veya süresi dolmuş oturum", 401),
+      error: error(
+        "Geçersiz veya süresi dolmuş oturum",
+        401
+      ),
     };
   }
 
-  const user = await env.DB.prepare(
-    `SELECT id,email,name,test_capsule_used,created_at
-     FROM users
-     WHERE id = ?`
-  )
-    .bind(payload.user_id)
-    .first();
+  const user =
+    await env.DB.prepare(
+      `SELECT
+        id,
+        email,
+        name,
+        test_capsule_used,
+        created_at
+       FROM users
+       WHERE id = ?`
+    )
+      .bind(payload.user_id)
+      .first();
 
   if (!user) {
     return {
-      error: error("Kullanıcı bulunamadı", 401),
+      error: error(
+        "Kullanıcı bulunamadı",
+        401
+      ),
     };
   }
 
@@ -313,36 +428,68 @@ function validEmail(email) {
   );
 }
 
-async function register(request, env) {
-  const body = await readBody(request);
+
+/* =====================================================
+   REGISTER
+   ===================================================== */
+
+async function register(
+  request,
+  env
+) {
+  const body =
+    await readBody(request);
 
   if (!body) {
-    return error("Geçersiz JSON");
+    return error(
+      "Geçersiz JSON"
+    );
   }
 
-  const email = normalizeEmail(body.email);
-  const name = String(body.name || "").trim();
-  const password = generatePassword(16);
+  const email =
+    normalizeEmail(body.email);
+
+  const name =
+    String(
+      body.name || ""
+    ).trim();
+
+  const password =
+    generatePassword(16);
+
+  const recoveryKey =
+    generateRecoveryKey();
 
   if (!validEmail(email)) {
-    return error("Geçerli bir e-posta adresi girin");
+    return error(
+      "Geçerli bir e-posta adresi girin"
+    );
   }
 
-  if (!name || name.length < 2) {
-    return error("Ad soyad gerekli");
+  if (
+    !name ||
+    name.length < 2
+  ) {
+    return error(
+      "Ad soyad gerekli"
+    );
   }
 
   if (!validPassword(password)) {
     return error(
-      "Şifre en az 8 karakter olmalıdır"
+      "Otomatik şifre oluşturulamadı",
+      500
     );
   }
 
-  const existing = await env.DB.prepare(
-    `SELECT id FROM users WHERE email = ?`
-  )
-    .bind(email)
-    .first();
+  const existing =
+    await env.DB.prepare(
+      `SELECT id
+       FROM users
+       WHERE email = ?`
+    )
+      .bind(email)
+      .first();
 
   if (existing) {
     return error(
@@ -352,56 +499,112 @@ async function register(request, env) {
   }
 
   const id = uuid();
-  const passwordHash = await hashPassword(password);
+
+  const passwordHash =
+    await hashPassword(
+      password
+    );
+
+  const recoveryKeyHash =
+    await hashText(
+      recoveryKey
+    );
 
   await env.DB.prepare(
     `INSERT INTO users
-      (id,email,name,password_hash,test_capsule_used)
-     VALUES (?,?,?,?,0)`
+      (
+        id,
+        email,
+        name,
+        password_hash,
+        recovery_key_hash,
+        test_capsule_used
+      )
+     VALUES (?,?,?,?,?,0)`
   )
     .bind(
       id,
       email,
       name,
-      passwordHash
+      passwordHash,
+      recoveryKeyHash
     )
     .run();
 
   return json({
-  ok: true,
-  message: "Kayıt başarılı",
+    ok: true,
 
-  warning:
-    "Bu şifre sistem tarafından otomatik oluşturulmuştur. Şifrenizi güvenli bir yerde saklayın. Şifre kaybolursa kurtarma işlemi için gerekli güvenlik anahtarınız bulunmalıdır.",
+    message:
+      "Kayıt başarılı",
 
-  generated_password: password,
+    warning:
+      "BU BİLGİLERİ ŞİMDİ KAYDEDİN. Şifreniz ve kurtarma anahtarınız güvenli şekilde saklanmalıdır. Kurtarma anahtarı sistemde düz metin olarak tutulmaz. Kaybolan kurtarma anahtarı sistem yöneticisi tarafından görüntülenemez.",
 
-  user: {
-    id,
-    email,
-    name,
-    test_capsule_used: 0,
-    test_available: true,
-  },
-});
+    security_notice:
+      "Gerçek kapsül kilitlendikten sonra açılış tarihi değiştirilemez. Telefonun veya bilgisayarın tarihini değiştirmek kapsülü erkenden açmaz. Açılış zamanı sunucu tarafından kontrol edilir.",
+
+    credentials: {
+      password,
+      recovery_key: recoveryKey,
+    },
+
+    user: {
+      id,
+      email,
+      name,
+      test_capsule_used: 0,
+      test_available: true,
+    },
+  });
 }
-async function login(request, env) {
-  const body = await readBody(request);
+
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+
+async function login(
+  request,
+  env
+) {
+  const body =
+    await readBody(request);
 
   if (!body) {
-    return error("Geçersiz JSON");
+    return error(
+      "Geçersiz JSON"
+    );
   }
 
-  const email = normalizeEmail(body.email);
-  const password = body.password;
+  const email =
+    normalizeEmail(body.email);
 
-  const user = await env.DB.prepare(
-    `SELECT *
-     FROM users
-     WHERE email = ?`
-  )
-    .bind(email)
-    .first();
+  const password =
+    body.password;
+
+  if (!validEmail(email)) {
+    return error(
+      "Geçerli bir e-posta adresi girin"
+    );
+  }
+
+  if (
+    typeof password !==
+    "string"
+  ) {
+    return error(
+      "Şifre gerekli"
+    );
+  }
+
+  const user =
+    await env.DB.prepare(
+      `SELECT *
+       FROM users
+       WHERE email = ?`
+    )
+      .bind(email)
+      .first();
 
   if (!user) {
     return error(
@@ -410,10 +613,11 @@ async function login(request, env) {
     );
   }
 
-  const valid = await verifyPassword(
-    password,
-    user.password_hash
-  );
+  const valid =
+    await verifyPassword(
+      password,
+      user.password_hash
+    );
 
   if (!valid) {
     return error(
@@ -429,72 +633,231 @@ async function login(request, env) {
     );
   }
 
-  const now = Date.now();
+  const now =
+    Date.now();
 
-  const token = await signToken(
-    {
-      user_id: user.id,
-      iat: now,
-      exp: now + 7 * 24 * 60 * 60 * 1000,
-    },
-    env.AUTH_SECRET
-  );
+  const token =
+    await signToken(
+      {
+        user_id: user.id,
+        iat: now,
+        exp:
+          now +
+          7 *
+            24 *
+            60 *
+            60 *
+            1000,
+      },
+      env.AUTH_SECRET
+    );
 
   return json({
     ok: true,
+
     token,
-    expires_in: 7 * 24 * 60 * 60,
+
+    expires_in:
+      7 *
+      24 *
+      60 *
+      60,
+
     user: {
       id: user.id,
       email: user.email,
       name: user.name,
       test_capsule_used:
         user.test_capsule_used,
+
       test_available:
         user.test_capsule_used === 0,
     },
   });
 }
 
-async function me(request, env) {
-  const auth = await requireUser(request, env);
 
-  if (auth.error) return auth.error;
+/* =====================================================
+   RECOVERY
+   ===================================================== */
+
+async function recoverAccount(
+  request,
+  env
+) {
+  const body =
+    await readBody(request);
+
+  if (!body) {
+    return error(
+      "Geçersiz JSON"
+    );
+  }
+
+  const email =
+    normalizeEmail(body.email);
+
+  const recoveryKey =
+    String(
+      body.recovery_key || ""
+    )
+      .trim()
+      .toUpperCase();
+
+  if (!validEmail(email)) {
+    return error(
+      "Geçerli bir e-posta adresi girin"
+    );
+  }
+
+  if (!recoveryKey) {
+    return error(
+      "Kurtarma anahtarı gerekli"
+    );
+  }
+
+  const user =
+    await env.DB.prepare(
+      `SELECT *
+       FROM users
+       WHERE email = ?`
+    )
+      .bind(email)
+      .first();
+
+  if (!user) {
+    return error(
+      "E-posta veya kurtarma anahtarı hatalı",
+      401
+    );
+  }
+
+  const suppliedHash =
+    await hashText(
+      recoveryKey
+    );
+
+  if (
+    suppliedHash !==
+    user.recovery_key_hash
+  ) {
+    return error(
+      "E-posta veya kurtarma anahtarı hatalı",
+      401
+    );
+  }
+
+  const newPassword =
+    generatePassword(16);
+
+  const newPasswordHash =
+    await hashPassword(
+      newPassword
+    );
+
+  await env.DB.prepare(
+    `UPDATE users
+     SET password_hash = ?
+     WHERE id = ?`
+  )
+    .bind(
+      newPasswordHash,
+      user.id
+    )
+    .run();
 
   return json({
     ok: true,
+
+    message:
+      "Hesap kurtarıldı. Yeni şifrenizi güvenli bir yere kaydedin.",
+
+    warning:
+      "Yeni şifre yalnızca bu yanıtta gösterilmektedir. Kaybederseniz yeniden kurtarma anahtarına ihtiyaç duyarsınız.",
+
+    generated_password:
+      newPassword,
+  });
+}
+
+
+/* =====================================================
+   ME
+   ===================================================== */
+
+async function me(
+  request,
+  env
+) {
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
+
+  if (auth.error) {
+    return auth.error;
+  }
+
+  return json({
+    ok: true,
+
     user: {
       id: auth.user.id,
       email: auth.user.email,
       name: auth.user.name,
+
       test_capsule_used:
         auth.user.test_capsule_used,
+
       test_available:
         auth.user.test_capsule_used === 0,
-      created_at: auth.user.created_at,
+
+      created_at:
+        auth.user.created_at,
     },
   });
 }
 
-async function createCapsule(request, env) {
-  const auth = await requireUser(request, env);
 
-  if (auth.error) return auth.error;
+/* =====================================================
+   CREATE CAPSULE
+   ===================================================== */
 
-  const body = await readBody(request);
+async function createCapsule(
+  request,
+  env
+) {
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
 
-  if (!body) {
-    return error("Geçersiz JSON");
+  if (auth.error) {
+    return auth.error;
   }
 
-  const title = String(
-    body.title || ""
-  ).trim();
+  const body =
+    await readBody(request);
+
+  if (!body) {
+    return error(
+      "Geçersiz JSON"
+    );
+  }
+
+  const title =
+    String(
+      body.title || ""
+    ).trim();
 
   const description =
     body.description == null
       ? null
-      : String(body.description);
+      : String(
+          body.description
+        );
 
   const requestedMode =
     body.mode === "real"
@@ -502,42 +865,70 @@ async function createCapsule(request, env) {
       : "test";
 
   if (!title) {
-    return error("Kapsül başlığı gerekli");
+    return error(
+      "Kapsül başlığı gerekli"
+    );
   }
 
-  /*
-   * TEST KAPSÜLÜ
-   *
-   * Kullanıcının tek ücretsiz hakkını
-   * D1 transaction ile tüketiyoruz.
-   */
-  if (requestedMode === "test") {
-    const capsuleId = uuid();
 
-    const result = await env.DB.batch([
-      env.DB.prepare(
-        `UPDATE users
-         SET test_capsule_used = 1
-         WHERE id = ?
-         AND test_capsule_used = 0`
-      ).bind(auth.user.id),
+  /* ============================
+     TEST
+     ============================ */
 
-      env.DB.prepare(
-        `INSERT INTO capsules
-          (id,user_id,title,description,mode,status,visibility)
-         VALUES (?,?,?,?,?,'DRAFT','private')`
-      ).bind(
-        capsuleId,
-        auth.user.id,
-        title,
-        description,
-        "test"
-      ),
-    ]);
+  if (
+    requestedMode === "test"
+  ) {
+    const capsuleId =
+      uuid();
 
-    const updateResult = result[0];
+    const result =
+      await env.DB.batch([
+        env.DB.prepare(
+          `UPDATE users
+           SET test_capsule_used = 1
+           WHERE id = ?
+           AND test_capsule_used = 0`
+        )
+          .bind(
+            auth.user.id
+          ),
 
-    if (!updateResult.meta.changes) {
+        env.DB.prepare(
+          `INSERT INTO capsules
+            (
+              id,
+              user_id,
+              title,
+              description,
+              mode,
+              status,
+              visibility
+            )
+           VALUES (
+             ?,
+             ?,
+             ?,
+             ?,
+             'test',
+             'DRAFT',
+             'private'
+           )`
+        )
+          .bind(
+            capsuleId,
+            auth.user.id,
+            title,
+            description
+          ),
+      ]);
+
+    const updateResult =
+      result[0];
+
+    if (
+      !updateResult.meta
+        .changes
+    ) {
       return error(
         "Ücretsiz test hakkınız daha önce kullanılmış",
         409
@@ -546,7 +937,10 @@ async function createCapsule(request, env) {
 
     return json({
       ok: true,
-      message: "Test kapsülü oluşturuldu",
+
+      message:
+        "Test kapsülü oluşturuldu",
+
       capsule: {
         id: capsuleId,
         mode: "test",
@@ -557,31 +951,49 @@ async function createCapsule(request, env) {
     }, 201);
   }
 
-  /*
-   * GERÇEK KAPSÜL
-   *
-   * Doğrudan gerçek kapsül oluşturulabilir.
-   * Ancak LOCKED olarak oluşturulamaz.
-   */
-  const capsuleId = uuid();
+
+  /* ============================
+     REAL
+     ============================ */
+
+  const capsuleId =
+    uuid();
 
   await env.DB.prepare(
     `INSERT INTO capsules
-      (id,user_id,title,description,mode,status,visibility)
-     VALUES (?,?,?,?,?,'DRAFT','private')`
+      (
+        id,
+        user_id,
+        title,
+        description,
+        mode,
+        status,
+        visibility
+      )
+     VALUES (
+       ?,
+       ?,
+       ?,
+       ?,
+       'real',
+       'DRAFT',
+       'private'
+     )`
   )
     .bind(
       capsuleId,
       auth.user.id,
       title,
-      description,
-      "real"
+      description
     )
     .run();
 
   return json({
     ok: true,
-    message: "Gerçek kapsül oluşturuldu",
+
+    message:
+      "Gerçek kapsül oluşturuldu",
+
     capsule: {
       id: capsuleId,
       mode: "real",
@@ -592,51 +1004,85 @@ async function createCapsule(request, env) {
   }, 201);
 }
 
-async function listCapsules(request, env) {
-  const auth = await requireUser(request, env);
 
-  if (auth.error) return auth.error;
+/* =====================================================
+   LIST CAPSULES
+   ===================================================== */
 
-  const result = await env.DB.prepare(
-    `SELECT
-       id,
-       title,
-       description,
-       mode,
-       status,
-       visibility,
-       unlock_at,
-       locked_at,
-       created_at
-     FROM capsules
-     WHERE user_id = ?
-     ORDER BY created_at DESC`
-  )
-    .bind(auth.user.id)
-    .all();
+async function listCapsules(
+  request,
+  env
+) {
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
+
+  if (auth.error) {
+    return auth.error;
+  }
+
+  const result =
+    await env.DB.prepare(
+      `SELECT
+        id,
+        title,
+        description,
+        mode,
+        status,
+        visibility,
+        unlock_at,
+        locked_at,
+        created_at
+       FROM capsules
+       WHERE user_id = ?
+       ORDER BY created_at DESC`
+    )
+      .bind(
+        auth.user.id
+      )
+      .all();
 
   return json({
     ok: true,
-    capsules: result.results || [],
+    capsules:
+      result.results || [],
   });
 }
 
-async function getCapsule(request, env, capsuleId) {
-  const auth = await requireUser(request, env);
 
-  if (auth.error) return auth.error;
+/* =====================================================
+   GET CAPSULE
+   ===================================================== */
 
-  const capsule = await env.DB.prepare(
-    `SELECT *
-     FROM capsules
-     WHERE id = ?
-     AND user_id = ?`
-  )
-    .bind(
-      capsuleId,
-      auth.user.id
+async function getCapsule(
+  request,
+  env,
+  capsuleId
+) {
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
+
+  if (auth.error) {
+    return auth.error;
+  }
+
+  const capsule =
+    await env.DB.prepare(
+      `SELECT *
+       FROM capsules
+       WHERE id = ?
+       AND user_id = ?`
     )
-    .first();
+      .bind(
+        capsuleId,
+        auth.user.id
+      )
+      .first();
 
   if (!capsule) {
     return error(
@@ -645,63 +1091,80 @@ async function getCapsule(request, env, capsuleId) {
     );
   }
 
-  const entries = await env.DB.prepare(
-    `SELECT
-       id,
-       year,
-       type,
-       title,
-       content,
-       created_at
-     FROM entries
-     WHERE capsule_id = ?
-     ORDER BY created_at ASC`
-  )
-    .bind(capsuleId)
-    .all();
+  const entries =
+    await env.DB.prepare(
+      `SELECT
+        id,
+        year,
+        type,
+        title,
+        content,
+        created_at
+       FROM entries
+       WHERE capsule_id = ?
+       ORDER BY created_at ASC`
+    )
+      .bind(capsuleId)
+      .all();
 
-  const layers = await env.DB.prepare(
-    `SELECT
-       id,
-       layer_no,
-       layer_type,
-       created_at
-     FROM security_layers
-     WHERE capsule_id = ?
-     ORDER BY layer_no ASC`
-  )
-    .bind(capsuleId)
-    .all();
+  const layers =
+    await env.DB.prepare(
+      `SELECT
+        id,
+        layer_no,
+        layer_type,
+        created_at
+       FROM security_layers
+       WHERE capsule_id = ?
+       ORDER BY layer_no ASC`
+    )
+      .bind(capsuleId)
+      .all();
 
   return json({
     ok: true,
     capsule,
-    entries: entries.results || [],
+
+    entries:
+      entries.results || [],
+
     security_layers:
       layers.results || [],
   });
 }
+
+
+/* =====================================================
+   ADD ENTRY
+   ===================================================== */
 
 async function addEntry(
   request,
   env,
   capsuleId
 ) {
-  const auth = await requireUser(request, env);
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
 
-  if (auth.error) return auth.error;
+  if (auth.error) {
+    return auth.error;
+  }
 
-  const capsule = await env.DB.prepare(
-    `SELECT *
-     FROM capsules
-     WHERE id = ?
-     AND user_id = ?`
-  )
-    .bind(
-      capsuleId,
-      auth.user.id
+  const capsule =
+    await env.DB.prepare(
+      `SELECT *
+       FROM capsules
+       WHERE id = ?
+       AND user_id = ?`
     )
-    .first();
+      .bind(
+        capsuleId,
+        auth.user.id
+      )
+      .first();
 
   if (!capsule) {
     return error(
@@ -710,24 +1173,33 @@ async function addEntry(
     );
   }
 
-  if (capsule.status === "LOCKED") {
+  if (
+    capsule.status ===
+    "LOCKED"
+  ) {
     return error(
       "Kilitlenmiş kapsüle içerik eklenemez",
       409
     );
   }
 
-  if (capsule.status === "OPEN") {
+  if (
+    capsule.status ===
+    "OPEN"
+  ) {
     return error(
       "Açılmış kapsüle içerik eklenemez",
       409
     );
   }
 
-  const body = await readBody(request);
+  const body =
+    await readBody(request);
 
   if (!body) {
-    return error("Geçersiz JSON");
+    return error(
+      "Geçersiz JSON"
+    );
   }
 
   const allowedTypes = [
@@ -740,7 +1212,9 @@ async function addEntry(
   ];
 
   const type =
-    allowedTypes.includes(body.type)
+    allowedTypes.includes(
+      body.type
+    )
       ? body.type
       : null;
 
@@ -750,23 +1224,35 @@ async function addEntry(
     );
   }
 
-  const year = Number(
-    body.year || new Date().getFullYear()
-  );
+  const year =
+    Number(
+      body.year ||
+      new Date().getFullYear()
+    );
 
   if (
     !Number.isInteger(year) ||
     year < 1900 ||
     year > 9999
   ) {
-    return error("Geçersiz yıl");
+    return error(
+      "Geçersiz yıl"
+    );
   }
 
-  const id = uuid();
+  const id =
+    uuid();
 
   await env.DB.prepare(
     `INSERT INTO entries
-      (id,capsule_id,year,type,title,content)
+      (
+        id,
+        capsule_id,
+        year,
+        type,
+        title,
+        content
+      )
      VALUES (?,?,?,?,?,?)`
   )
     .bind(
@@ -774,9 +1260,11 @@ async function addEntry(
       capsuleId,
       year,
       type,
+
       body.title
         ? String(body.title)
         : null,
+
       body.content
         ? String(body.content)
         : null
@@ -785,36 +1273,52 @@ async function addEntry(
 
   return json({
     ok: true,
-    message: "İçerik eklendi",
+
+    message:
+      "İçerik eklendi",
+
     entry: {
       id,
-      capsule_id: capsuleId,
+      capsule_id:
+        capsuleId,
       year,
       type,
     },
   }, 201);
 }
 
+
+/* =====================================================
+   TEST → REAL
+   ===================================================== */
+
 async function convertTestToReal(
   request,
   env,
   capsuleId
 ) {
-  const auth = await requireUser(request, env);
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
 
-  if (auth.error) return auth.error;
+  if (auth.error) {
+    return auth.error;
+  }
 
-  const capsule = await env.DB.prepare(
-    `SELECT *
-     FROM capsules
-     WHERE id = ?
-     AND user_id = ?`
-  )
-    .bind(
-      capsuleId,
-      auth.user.id
+  const capsule =
+    await env.DB.prepare(
+      `SELECT *
+       FROM capsules
+       WHERE id = ?
+       AND user_id = ?`
     )
-    .first();
+      .bind(
+        capsuleId,
+        auth.user.id
+      )
+      .first();
 
   if (!capsule) {
     return error(
@@ -823,37 +1327,50 @@ async function convertTestToReal(
     );
   }
 
-  if (capsule.mode !== "test") {
+  if (
+    capsule.mode !==
+    "test"
+  ) {
     return error(
       "Bu kapsül test kapsülü değil",
       409
     );
   }
 
-  if (capsule.status !== "DRAFT") {
+  if (
+    capsule.status !==
+    "DRAFT"
+  ) {
     return error(
       "Sadece taslak test kapsülü gerçek kapsüle çevrilebilir",
       409
     );
   }
 
-  const body = await readBody(request);
+  const body =
+    await readBody(request);
 
   const title =
     body?.title
-      ? String(body.title).trim()
+      ? String(
+          body.title
+        ).trim()
       : capsule.title;
 
   const description =
-    body?.description !== undefined
-      ? String(body.description)
+    body?.description !==
+    undefined
+      ? String(
+          body.description
+        )
       : capsule.description;
 
   await env.DB.prepare(
     `UPDATE capsules
-     SET mode = 'real',
-         title = ?,
-         description = ?
+     SET
+       mode = 'real',
+       title = ?,
+       description = ?
      WHERE id = ?
      AND user_id = ?
      AND mode = 'test'
@@ -869,33 +1386,50 @@ async function convertTestToReal(
 
   return json({
     ok: true,
+
     message:
       "Test kapsülü gerçek kapsüle dönüştürüldü",
-    capsule_id: capsuleId,
-    mode: "real",
+
+    capsule_id:
+      capsuleId,
+
+    mode:
+      "real",
   });
 }
+
+
+/* =====================================================
+   LOCK CAPSULE
+   ===================================================== */
 
 async function lockCapsule(
   request,
   env,
   capsuleId
 ) {
-  const auth = await requireUser(request, env);
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
 
-  if (auth.error) return auth.error;
+  if (auth.error) {
+    return auth.error;
+  }
 
-  const capsule = await env.DB.prepare(
-    `SELECT *
-     FROM capsules
-     WHERE id = ?
-     AND user_id = ?`
-  )
-    .bind(
-      capsuleId,
-      auth.user.id
+  const capsule =
+    await env.DB.prepare(
+      `SELECT *
+       FROM capsules
+       WHERE id = ?
+       AND user_id = ?`
     )
-    .first();
+      .bind(
+        capsuleId,
+        auth.user.id
+      )
+      .first();
 
   if (!capsule) {
     return error(
@@ -904,32 +1438,44 @@ async function lockCapsule(
     );
   }
 
-  if (capsule.mode !== "real") {
+  if (
+    capsule.mode !==
+    "real"
+  ) {
     return error(
       "Test kapsülü kilitlenemez. Önce gerçek kapsüle dönüştürün.",
       409
     );
   }
 
-  if (capsule.status === "LOCKED") {
+  if (
+    capsule.status ===
+    "LOCKED"
+  ) {
     return error(
       "Kapsül zaten kalıcı olarak kilitlenmiş",
       409
     );
   }
 
-  if (capsule.status === "OPEN") {
+  if (
+    capsule.status ===
+    "OPEN"
+  ) {
     return error(
       "Açılmış kapsül tekrar kilitlenemez",
       409
     );
   }
 
-  const body = await readBody(request);
+  const body =
+    await readBody(request);
 
   const unlockAt =
     body?.unlock_at
-      ? String(body.unlock_at)
+      ? String(
+          body.unlock_at
+        )
       : null;
 
   if (!unlockAt) {
@@ -939,51 +1485,70 @@ async function lockCapsule(
   }
 
   const unlockTime =
-    Date.parse(unlockAt);
+    Date.parse(
+      unlockAt
+    );
 
-  if (Number.isNaN(unlockTime)) {
+  if (
+    Number.isNaN(
+      unlockTime
+    )
+  ) {
     return error(
       "Geçersiz açılış tarihi"
     );
   }
 
-  if (unlockTime <= Date.now()) {
+  if (
+    unlockTime <=
+    Date.now()
+  ) {
     return error(
       "Açılış tarihi gelecekte olmalıdır"
     );
   }
 
-  /*
-   * KRİTİK KURAL:
-   *
-   * Sadece DRAFT kapsül LOCKED olabilir.
-   *
-   * UPDATE koşullarında status='DRAFT'
-   * bulunduğu için kilitlendikten sonra
-   * unlock_at değiştirilemez.
-   */
   const lockedAt =
     new Date().toISOString();
 
-  const result = await env.DB.prepare(
-    `UPDATE capsules
-     SET status = 'LOCKED',
+  /*
+   * KALICI KİLİT
+   *
+   * status = DRAFT şartı sayesinde
+   * ikinci kez UPDATE yapılamaz.
+   *
+   * Bu nedenle unlock_at sonradan
+   * değiştirilemez.
+   */
+
+  const result =
+    await env.DB.prepare(
+      `UPDATE capsules
+       SET
+         status = 'LOCKED',
          unlock_at = ?,
          locked_at = ?
-     WHERE id = ?
-     AND user_id = ?
-     AND mode = 'real'
-     AND status = 'DRAFT'`
-  )
-    .bind(
-      new Date(unlockTime).toISOString(),
-      lockedAt,
-      capsuleId,
-      auth.user.id
+       WHERE id = ?
+       AND user_id = ?
+       AND mode = 'real'
+       AND status = 'DRAFT'`
     )
-    .run();
+      .bind(
+        new Date(
+          unlockTime
+        ).toISOString(),
 
-  if (!result.meta.changes) {
+        lockedAt,
+
+        capsuleId,
+
+        auth.user.id
+      )
+      .run();
+
+  if (
+    !result.meta.changes
+  ) {
     return error(
       "Kapsül kilitlenemedi",
       409
@@ -992,38 +1557,60 @@ async function lockCapsule(
 
   return json({
     ok: true,
+
     message:
       "Kapsül kalıcı olarak kilitlendi",
+
     capsule: {
-      id: capsuleId,
-      status: "LOCKED",
+      id:
+        capsuleId,
+
+      status:
+        "LOCKED",
+
       unlock_at:
-        new Date(unlockTime).toISOString(),
-      locked_at: lockedAt,
+        new Date(
+          unlockTime
+        ).toISOString(),
+
+      locked_at:
+        lockedAt,
     },
   });
 }
+
+
+/* =====================================================
+   OPEN CAPSULE
+   ===================================================== */
 
 async function openCapsule(
   request,
   env,
   capsuleId
 ) {
-  const auth = await requireUser(request, env);
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
 
-  if (auth.error) return auth.error;
+  if (auth.error) {
+    return auth.error;
+  }
 
-  const capsule = await env.DB.prepare(
-    `SELECT *
-     FROM capsules
-     WHERE id = ?
-     AND user_id = ?`
-  )
-    .bind(
-      capsuleId,
-      auth.user.id
+  const capsule =
+    await env.DB.prepare(
+      `SELECT *
+       FROM capsules
+       WHERE id = ?
+       AND user_id = ?`
     )
-    .first();
+      .bind(
+        capsuleId,
+        auth.user.id
+      )
+      .first();
 
   if (!capsule) {
     return error(
@@ -1032,15 +1619,22 @@ async function openCapsule(
     );
   }
 
-  if (capsule.status === "OPEN") {
+  if (
+    capsule.status ===
+    "OPEN"
+  ) {
     return json({
       ok: true,
-      message: "Kapsül zaten açık",
+      message:
+        "Kapsül zaten açık",
       capsule,
     });
   }
 
-  if (capsule.status !== "LOCKED") {
+  if (
+    capsule.status !==
+    "LOCKED"
+  ) {
     return error(
       "Kapsül kilitli değil",
       409
@@ -1055,85 +1649,114 @@ async function openCapsule(
   }
 
   /*
-   * ŞİMDİLİK sunucunun çalıştığı zamanı
-   * Date.now() ile kontrol ediyoruz.
+   * ÖNEMLİ:
    *
-   * İlerleyen V1.2 aşamasında burada
-   * güvenilir harici zaman doğrulaması
-   * ve ek anti-tamper katmanı kurulacak.
+   * Buradaki Date.now()
+   * kullanıcının telefon saatini değil,
+   * Cloudflare Worker sunucu çalışma
+   * ortamının zamanını kullanır.
+   *
+   * Kullanıcı telefonunun tarihini
+   * 2071'e alsa bile bu kontrol
+   * değişmez.
    */
-  const unlockTime =
-    Date.parse(capsule.unlock_at);
 
-  if (Date.now() < unlockTime) {
+  const unlockTime =
+    Date.parse(
+      capsule.unlock_at
+    );
+
+  if (
+    Date.now() <
+    unlockTime
+  ) {
     return error(
       "Kapsül henüz açılma zamanına ulaşmadı",
       403
     );
   }
 
-  const result = await env.DB.prepare(
-    `UPDATE capsules
-     SET status = 'OPEN'
-     WHERE id = ?
-     AND user_id = ?
-     AND status = 'LOCKED'
-     AND unlock_at <= ?`
-  )
-    .bind(
-      capsuleId,
-      auth.user.id,
-      new Date().toISOString()
+  const result =
+    await env.DB.prepare(
+      `UPDATE capsules
+       SET status = 'OPEN'
+       WHERE id = ?
+       AND user_id = ?
+       AND status = 'LOCKED'
+       AND unlock_at <= ?`
     )
-    .run();
+      .bind(
+        capsuleId,
+        auth.user.id,
+        new Date().toISOString()
+      )
+      .run();
 
-  if (!result.meta.changes) {
+  if (
+    !result.meta.changes
+  ) {
     return error(
       "Kapsül açılamadı",
       409
     );
   }
 
-  const opened = await env.DB.prepare(
-    `SELECT *
-     FROM capsules
-     WHERE id = ?
-     AND user_id = ?`
-  )
-    .bind(
-      capsuleId,
-      auth.user.id
+  const opened =
+    await env.DB.prepare(
+      `SELECT *
+       FROM capsules
+       WHERE id = ?
+       AND user_id = ?`
     )
-    .first();
+      .bind(
+        capsuleId,
+        auth.user.id
+      )
+      .first();
 
   return json({
     ok: true,
+
     message:
       "Kapsül açıldı",
-    capsule: opened,
+
+    capsule:
+      opened,
   });
 }
+
+
+/* =====================================================
+   SECURITY LAYER
+   ===================================================== */
 
 async function addSecurityLayer(
   request,
   env,
   capsuleId
 ) {
-  const auth = await requireUser(request, env);
+  const auth =
+    await requireUser(
+      request,
+      env
+    );
 
-  if (auth.error) return auth.error;
+  if (auth.error) {
+    return auth.error;
+  }
 
-  const capsule = await env.DB.prepare(
-    `SELECT *
-     FROM capsules
-     WHERE id = ?
-     AND user_id = ?`
-  )
-    .bind(
-      capsuleId,
-      auth.user.id
+  const capsule =
+    await env.DB.prepare(
+      `SELECT *
+       FROM capsules
+       WHERE id = ?
+       AND user_id = ?`
     )
-    .first();
+      .bind(
+        capsuleId,
+        auth.user.id
+      )
+      .first();
 
   if (!capsule) {
     return error(
@@ -1142,101 +1765,171 @@ async function addSecurityLayer(
     );
   }
 
-  if (capsule.status === "LOCKED") {
+  if (
+    capsule.status ===
+    "LOCKED"
+  ) {
     return error(
       "Kilitlenmiş kapsülün güvenlik katmanı değiştirilemez",
       409
     );
   }
 
-  const body = await readBody(request);
+  if (
+    capsule.status ===
+    "OPEN"
+  ) {
+    return error(
+      "Açılmış kapsülün güvenlik katmanı değiştirilemez",
+      409
+    );
+  }
 
-  if (!body?.layer_type) {
+  const body =
+    await readBody(request);
+
+  if (
+    !body?.layer_type
+  ) {
     return error(
       "Güvenlik katmanı türü gerekli"
     );
   }
 
-  const last = await env.DB.prepare(
-    `SELECT MAX(layer_no) AS max_layer
-     FROM security_layers
-     WHERE capsule_id = ?`
-  )
-    .bind(capsuleId)
-    .first();
+  const last =
+    await env.DB.prepare(
+      `SELECT
+        MAX(layer_no) AS max_layer
+       FROM security_layers
+       WHERE capsule_id = ?`
+    )
+      .bind(
+        capsuleId
+      )
+      .first();
 
   const layerNo =
-    Number(last?.max_layer || 0) + 1;
+    Number(
+      last?.max_layer || 0
+    ) + 1;
 
-  const id = uuid();
+  const id =
+    uuid();
 
   await env.DB.prepare(
     `INSERT INTO security_layers
-      (id,capsule_id,layer_no,layer_type,secret_hash)
+      (
+        id,
+        capsule_id,
+        layer_no,
+        layer_type,
+        secret_hash
+      )
      VALUES (?,?,?,?,?)`
   )
     .bind(
       id,
       capsuleId,
       layerNo,
-      String(body.layer_type),
+      String(
+        body.layer_type
+      ),
+
       body.secret_hash
-        ? String(body.secret_hash)
+        ? String(
+            body.secret_hash
+          )
         : null
     )
     .run();
 
   return json({
     ok: true,
+
     message:
       "Güvenlik katmanı eklendi",
+
     layer: {
       id,
-      capsule_id: capsuleId,
-      layer_no: layerNo,
+
+      capsule_id:
+        capsuleId,
+
+      layer_no:
+        layerNo,
+
       layer_type:
-        String(body.layer_type),
+        String(
+          body.layer_type
+        ),
     },
   }, 201);
 }
 
-export default {
-  async fetch(request, env) {
 
-    if (request.method === "OPTIONS") {
-      return new Response(null, {
-        status: 204,
-        headers: JSON_HEADERS,
-      });
+/* =====================================================
+   ROUTER
+   ===================================================== */
+
+export default {
+
+  async fetch(
+    request,
+    env
+  ) {
+
+    if (
+      request.method ===
+      "OPTIONS"
+    ) {
+      return new Response(
+        null,
+        {
+          status: 204,
+          headers:
+            JSON_HEADERS,
+        }
+      );
     }
 
-    const u = new URL(request.url);
+    const u =
+      new URL(
+        request.url
+      );
 
     try {
 
-      // ============================
-      // HEALTH
-      // ============================
+      /* ============================
+         HEALTH
+         ============================ */
 
       if (
-        request.method === "GET" &&
-        u.pathname === "/api/health"
+        request.method ===
+          "GET" &&
+        u.pathname ===
+          "/api/health"
       ) {
         return json({
           ok: true,
-          service: "2071 Mektup",
-          version: "V1.1",
-          now: new Date().toISOString(),
+          service:
+            "2071 Mektup",
+          version:
+            "V1.1",
+          now:
+            new Date().toISOString(),
         });
       }
 
-      // ============================
-      // AUTH
-      // ============================
+
+      /* ============================
+         REGISTER
+         ============================ */
 
       if (
-        request.method === "POST" &&
-        u.pathname === "/api/register"
+        request.method ===
+          "POST" &&
+        u.pathname ===
+          "/api/register"
       ) {
         return await register(
           request,
@@ -1244,9 +1937,16 @@ export default {
         );
       }
 
+
+      /* ============================
+         LOGIN
+         ============================ */
+
       if (
-        request.method === "POST" &&
-        u.pathname === "/api/login"
+        request.method ===
+          "POST" &&
+        u.pathname ===
+          "/api/login"
       ) {
         return await login(
           request,
@@ -1254,9 +1954,33 @@ export default {
         );
       }
 
+
+      /* ============================
+         RECOVERY
+         ============================ */
+
       if (
-        request.method === "GET" &&
-        u.pathname === "/api/me"
+        request.method ===
+          "POST" &&
+        u.pathname ===
+          "/api/recovery"
+      ) {
+        return await recoverAccount(
+          request,
+          env
+        );
+      }
+
+
+      /* ============================
+         ME
+         ============================ */
+
+      if (
+        request.method ===
+          "GET" &&
+        u.pathname ===
+          "/api/me"
       ) {
         return await me(
           request,
@@ -1264,13 +1988,16 @@ export default {
         );
       }
 
-      // ============================
-      // CAPSULE LIST
-      // ============================
+
+      /* ============================
+         CAPSULE LIST
+         ============================ */
 
       if (
-        request.method === "GET" &&
-        u.pathname === "/api/capsules"
+        request.method ===
+          "GET" &&
+        u.pathname ===
+          "/api/capsules"
       ) {
         return await listCapsules(
           request,
@@ -1278,13 +2005,16 @@ export default {
         );
       }
 
-      // ============================
-      // CREATE CAPSULE
-      // ============================
+
+      /* ============================
+         CREATE CAPSULE
+         ============================ */
 
       if (
-        request.method === "POST" &&
-        u.pathname === "/api/capsules"
+        request.method ===
+          "POST" &&
+        u.pathname ===
+          "/api/capsules"
       ) {
         return await createCapsule(
           request,
@@ -1292,9 +2022,10 @@ export default {
         );
       }
 
-      // ============================
-      // CAPSULE ROUTES
-      // ============================
+
+      /* ============================
+         CAPSULE
+         ============================ */
 
       const capsuleMatch =
         u.pathname.match(
@@ -1303,7 +2034,8 @@ export default {
 
       if (
         capsuleMatch &&
-        request.method === "GET"
+        request.method ===
+          "GET"
       ) {
         return await getCapsule(
           request,
@@ -1312,9 +2044,10 @@ export default {
         );
       }
 
-      // ============================
-      // ADD ENTRY
-      // ============================
+
+      /* ============================
+         ENTRY
+         ============================ */
 
       const entryMatch =
         u.pathname.match(
@@ -1323,7 +2056,8 @@ export default {
 
       if (
         entryMatch &&
-        request.method === "POST"
+        request.method ===
+          "POST"
       ) {
         return await addEntry(
           request,
@@ -1332,9 +2066,10 @@ export default {
         );
       }
 
-      // ============================
-      // TEST → REAL
-      // ============================
+
+      /* ============================
+         TEST → REAL
+         ============================ */
 
       const convertMatch =
         u.pathname.match(
@@ -1343,7 +2078,8 @@ export default {
 
       if (
         convertMatch &&
-        request.method === "POST"
+        request.method ===
+          "POST"
       ) {
         return await convertTestToReal(
           request,
@@ -1352,9 +2088,10 @@ export default {
         );
       }
 
-      // ============================
-      // LOCK
-      // ============================
+
+      /* ============================
+         LOCK
+         ============================ */
 
       const lockMatch =
         u.pathname.match(
@@ -1363,7 +2100,8 @@ export default {
 
       if (
         lockMatch &&
-        request.method === "POST"
+        request.method ===
+          "POST"
       ) {
         return await lockCapsule(
           request,
@@ -1372,9 +2110,10 @@ export default {
         );
       }
 
-      // ============================
-      // OPEN
-      // ============================
+
+      /* ============================
+         OPEN
+         ============================ */
 
       const openMatch =
         u.pathname.match(
@@ -1383,7 +2122,8 @@ export default {
 
       if (
         openMatch &&
-        request.method === "POST"
+        request.method ===
+          "POST"
       ) {
         return await openCapsule(
           request,
@@ -1392,9 +2132,10 @@ export default {
         );
       }
 
-      // ============================
-      // SECURITY LAYER
-      // ============================
+
+      /* ============================
+         SECURITY
+         ============================ */
 
       const securityMatch =
         u.pathname.match(
@@ -1403,7 +2144,8 @@ export default {
 
       if (
         securityMatch &&
-        request.method === "POST"
+        request.method ===
+          "POST"
       ) {
         return await addSecurityLayer(
           request,
@@ -1411,6 +2153,7 @@ export default {
           securityMatch[1]
         );
       }
+
 
       return error(
         "Endpoint bulunamadı",
@@ -1426,8 +2169,13 @@ export default {
 
       return json({
         ok: false,
-        error: "Sunucu hatası",
-        detail: err?.message || String(err),
+
+        error:
+          "Sunucu hatası",
+
+        detail:
+          err?.message ||
+          String(err),
       }, 500);
     }
   },
