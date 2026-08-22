@@ -1,7 +1,75 @@
-PRAGMA foreign_keys = ON;
-CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY,email TEXT UNIQUE NOT NULL,name TEXT,password_hash TEXT NOT NULL,test_capsule_used INTEGER NOT NULL DEFAULT 0,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
-CREATE TABLE IF NOT EXISTS capsules (id TEXT PRIMARY KEY,user_id TEXT NOT NULL,title TEXT NOT NULL,description TEXT,mode TEXT NOT NULL CHECK(mode IN ('test','real')),status TEXT NOT NULL DEFAULT 'DRAFT' CHECK(status IN ('DRAFT','LOCKED','OPEN')),visibility TEXT NOT NULL DEFAULT 'private' CHECK(visibility IN ('private','family','public')),unlock_at TEXT,locked_at TEXT,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE);
-CREATE TABLE IF NOT EXISTS entries (id TEXT PRIMARY KEY,capsule_id TEXT NOT NULL,year INTEGER NOT NULL,type TEXT NOT NULL CHECK(type IN ('letter','note','photo','video','audio','document')),title TEXT,content TEXT,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY(capsule_id) REFERENCES capsules(id) ON DELETE CASCADE);
-CREATE TABLE IF NOT EXISTS security_layers (id TEXT PRIMARY KEY,capsule_id TEXT NOT NULL,layer_no INTEGER NOT NULL,layer_type TEXT NOT NULL,secret_hash TEXT,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,FOREIGN KEY(capsule_id) REFERENCES capsules(id) ON DELETE CASCADE,UNIQUE(capsule_id,layer_no));
-CREATE TABLE IF NOT EXISTS login_attempts (id INTEGER PRIMARY KEY AUTOINCREMENT,user_id TEXT,ip_hash TEXT,success INTEGER NOT NULL DEFAULT 0,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
-CREATE INDEX IF NOT EXISTS idx_capsules_unlock ON capsules(status,unlock_at);
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  name TEXT NOT NULL,
+  password_hash TEXT NOT NULL,
+  recovery_key_hash TEXT NOT NULL,
+  test_capsule_used INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS capsules (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  mode TEXT NOT NULL CHECK(mode IN ('test','real')),
+  status TEXT NOT NULL DEFAULT 'DRAFT'
+    CHECK(status IN ('DRAFT','LOCKED','OPEN')),
+  visibility TEXT NOT NULL DEFAULT 'private'
+    CHECK(visibility IN ('private','family','public')),
+  unlock_at TEXT,
+  locked_at TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY(user_id)
+    REFERENCES users(id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS entries (
+  id TEXT PRIMARY KEY,
+  capsule_id TEXT NOT NULL,
+  year INTEGER NOT NULL,
+  type TEXT NOT NULL
+    CHECK(type IN ('letter','note','photo','video','audio','document')),
+  title TEXT,
+  content TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY(capsule_id)
+    REFERENCES capsules(id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS security_layers (
+  id TEXT PRIMARY KEY,
+  capsule_id TEXT NOT NULL,
+  layer_no INTEGER NOT NULL,
+  layer_type TEXT NOT NULL,
+  secret_hash TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY(capsule_id)
+    REFERENCES capsules(id)
+    ON DELETE CASCADE,
+
+  UNIQUE(capsule_id,layer_no)
+);
+
+CREATE TABLE IF NOT EXISTS login_attempts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id TEXT,
+  ip_hash TEXT,
+  success INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_capsules_unlock
+ON capsules(status,unlock_at);
+
+CREATE INDEX IF NOT EXISTS idx_capsules_user
+ON capsules(user_id);
+
+CREATE INDEX IF NOT EXISTS idx_entries_capsule
+ON entries(capsule_id);
