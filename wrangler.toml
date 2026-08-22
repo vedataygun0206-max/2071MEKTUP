@@ -1,0 +1,12 @@
+name = "2071-mektup"
+main = "worker.js"
+compatibility_date = "2026-08-22"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "2071-mektup"
+database_id = "BURAYA_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "2071-mektup-media"
