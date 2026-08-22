@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2071 Mektup</title>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#0b1020;color:#f5f7ff}main{max-width:900px;margin:auto;padding:32px 20px}.hero{padding:48px 0}.tag{opacity:.7}.count{font-size:clamp(42px,10vw,92px);font-weight:800;letter-spacing:-3px}.card{background:#151c31;border:1px solid #2a3555;border-radius:18px;padding:20px;margin-top:20px}.btn{display:inline-block;padding:13px 18px;border-radius:10px;background:#fff;color:#111;text-decoration:none;font-weight:700}.muted{color:#aab3ca}</style>
+</head>
+<body><main>
+<section class="hero"><div class="tag">GELECEK ARŞİVİ</div><h1>2071 MEKTUP</h1><p class="muted">Bugünü mühürle, geleceğe bırak.</p><div id="count" class="count">--</div><p id="target" class="muted">Hedef: 22 Ağustos 2071</p><a class="btn" href="#kapsul">+ Zaman Kapsülü Oluştur</a></section>
+<section id="kapsul" class="card"><h2>İlk prototip</h2><p>1, 5, 10, 25, 45 yıl veya özel tarih seç; mektup, not, fotoğraf, ses ve video ekle; kapsülü kilitle.</p><p class="muted">Kilitli kapsüller sunucu tarihi gelmeden açılmaz.</p></section>
+<section class="card"><h2>🌍 Kamu Arşivi</h2><p>Henüz açılmamış kamu mektupları yalnızca izin verilen bilgileri gösterir. Tarihi gelen mektuplar açılmış arşive taşınır.</p></section>
+</main>
+<script>
+const target=new Date('2071-08-22T00:00:00+03:00').getTime();
+function tick(){let d=Math.max(0,target-Date.now());let days=Math.floor(d/86400000);let h=Math.floor(d%86400000/3600000);let m=Math.floor(d%3600000/60000);let s=Math.floor(d%60000/1000);document.querySelector('#count').textContent=`${days.toLocaleString('tr-TR')} gün ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+tick();setInterval(tick,1000);
+</script></body></html>
