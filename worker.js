@@ -368,18 +368,23 @@ async function register(request, env) {
     .run();
 
   return json({
-    ok: true,
-    message: "Kayıt başarılı",
-    user: {
-      id,
-      email,
-      name,
-      test_capsule_used: 0,
-      test_available: true,
-    },
-  }, 201);
-}
+  ok: true,
+  message: "Kayıt başarılı",
 
+  warning:
+    "Bu şifre sistem tarafından otomatik oluşturulmuştur. Şifrenizi güvenli bir yerde saklayın. Şifre kaybolursa kurtarma işlemi için gerekli güvenlik anahtarınız bulunmalıdır.",
+
+  generated_password: password,
+
+  user: {
+    id,
+    email,
+    name,
+    test_capsule_used: 0,
+    test_available: true,
+  },
+});
+}
 async function login(request, env) {
   const body = await readBody(request);
 
