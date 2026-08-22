@@ -79,7 +79,56 @@ async function hashPassword(password) {
 
   return `${base64url(salt)}.${base64url(hash)}`;
 }
+function generatePassword(length = 16) {
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%";
 
+  const bytes = crypto.getRandomValues(
+    new Uint8Array(length)
+  );
+
+  let password = "";
+
+  for (let i = 0; i < length; i++) {
+    password += chars[bytes[i] % chars.length];
+  }
+
+  return password;
+}
+
+function generateRecoveryKey() {
+  const chars =
+    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  const bytes = crypto.getRandomValues(
+    new Uint8Array(20)
+  );
+
+  let key = "";
+
+  for (let i = 0; i < bytes.length; i++) {
+    if (i > 0 && i % 4 === 0) {
+      key += "-";
+    }
+
+    key += chars[bytes[i] % chars.length];
+  }
+
+  return key;
+}
+
+async function hashText(text) {
+  const data = new TextEncoder().encode(text);
+
+  const hash = await crypto.subtle.digest(
+    "SHA-256",
+    data
+  );
+
+  return base64url(
+    new Uint8Array(hash)
+  );
+}
 async function verifyPassword(password, stored) {
   try {
     const parts = stored.split(".");
@@ -273,7 +322,7 @@ async function register(request, env) {
 
   const email = normalizeEmail(body.email);
   const name = String(body.name || "").trim();
-  const password = body.password;
+  const password = generatePassword(16);
 
   if (!validEmail(email)) {
     return error("Geçerli bir e-posta adresi girin");
