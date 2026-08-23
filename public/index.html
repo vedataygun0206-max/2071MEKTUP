@@ -709,13 +709,13 @@ async function registerUser(){
       .classList.remove("hidden");
 
 
-    document
-      .getElementById(
-        "result.data.credentials.password"
-      )
-      .textContent =
-        result.data.generated_password;
+    const loginPassword =
+  document.getElementById("loginPassword");
 
+if (loginPassword) {
+  loginPassword.value =
+    result.data.credentials.password;
+}
 
     /*
      * Şifreyi otomatik olarak
