@@ -1,3196 +1,485 @@
 <!doctype html>
 <html lang="tr">
 <head>
-
 <meta charset="utf-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1"
->
-
-<link
-  rel="manifest"
-  href="/manifest.json"
->
-
-<meta
-  name="theme-color"
-  content="#07111f"
->
-
-<meta
-  name="description"
-  content="2071 Mektup — Bugünü mühürle, geleceğe bırak."
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="2071 Mektup — Bugünü mühürle, geleceğe bırak.">
 <title>2071 Mektup | Geleceğe Bırak</title>
 
 <style>
-
-/* =====================================================
-   TEMEL
-===================================================== */
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-  margin:0;
-  background:
-    radial-gradient(
-      circle at 50% -10%,
-      #193452 0,
-      #07111f 45%,
-      #03070d 100%
-    );
-  color:#eef4ff;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-  line-height:1.55;
+  margin:0;background:radial-gradient(circle at 50% -10%,#193452 0,#07111f 45%,#03070d 100%);
+  color:#eef4ff;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.55
 }
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.wrap{width:100%;max-width:920px;margin:auto;padding:0 16px 50px}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-logo{font-size:19px;font-weight:950;letter-spacing:.4px}.nav-logo span{color:#e7c76a}
+.nav-menu{display:flex;gap:7px}.nav-menu button{background:#0c1a2b;color:#cbd9ea;border:1px solid #263b55;border-radius:9px;padding:7px 11px;font-size:12px}
 
-button,
-input,
-textarea,
-select{
-  font:inherit;
+.hero{text-align:center;padding:48px 8px 25px}
+.eyebrow,.badge{display:inline-block;padding:6px 12px;border-radius:30px;background:rgba(231,199,106,.08);border:1px solid rgba(231,199,106,.25);color:#e7c76a;font-size:11px;font-weight:900;letter-spacing:1px}
+.logo{margin:17px 0 6px;font-size:clamp(42px,10vw,72px);line-height:1;font-weight:950;letter-spacing:-3px}.logo span{color:#e7c76a}
+.tag{max-width:620px;margin:15px auto 0;color:#a9bdd7;font-size:17px}
+.hero-buttons{margin-top:24px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.primary,.secondary,.danger{border-radius:11px;padding:12px 17px;border:0;font-weight:850}
+.primary{background:#e7c76a;color:#111}.secondary{background:#142840;color:#fff;border:1px solid #2b4665}.danger{background:#7c2630;color:#fff}
+
+.date-box{max-width:650px;margin:28px auto 0;padding:20px;background:linear-gradient(135deg,rgba(231,199,106,.11),rgba(12,31,51,.75));border:1px solid rgba(231,199,106,.23);border-radius:21px}
+.date-title{color:#e7c76a;font-size:14px;font-weight:900;letter-spacing:.4px}.date-subtitle{margin-top:5px;color:#91a8c3;font-size:12px}
+.count{margin-top:8px;color:#f5da83;font-size:clamp(32px,8vw,55px);font-weight:950;line-height:1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:22px 0}
+.stat{background:#0b192a;border:1px solid #1e344d;border-radius:15px;padding:15px 7px;text-align:center}
+.stat-number{color:#e7c76a;font-size:25px;font-weight:950}.stat-label{color:#849bb5;font-size:10px;line-height:1.3}
+.section{margin-top:30px}.section-title{margin:7px 0 4px;font-size:25px;line-height:1.2}.section-subtitle{margin-top:0;color:#91a8c3;font-size:14px}
+.card{background:linear-gradient(145deg,rgba(14,29,48,.96),rgba(7,18,31,.97));border:1px solid #20354f;border-radius:18px;padding:20px;margin:12px 0}
+.badge{background:#173554;color:#dcecff;padding:5px 9px;border:0;letter-spacing:.2px}
+.manifesto{text-align:center;padding:27px 20px}.manifesto h2{font-size:27px;margin:10px 0}.manifesto p{max-width:650px;margin:9px auto;color:#a9bdd7}
+.timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.timeline-item{padding:17px;background:#091726;border:1px solid #20354e;border-radius:15px}
+.timeline-year{color:#e7c76a;font-size:12px;font-weight:900}.timeline h3{margin:7px 0;font-size:16px}.timeline p{margin:0;color:#8fa6bf;font-size:13px}
+.feedback-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.feedback-card{background:#091726;border:1px solid #20364f;border-radius:15px;padding:17px}.feedback-card h3{margin:8px 0 5px}.feedback-card p{color:#91a8c3;font-size:13px}
+input,textarea,select{width:100%;padding:12px;margin:5px 0;background:#071321;color:#fff;border:1px solid #2a4562;border-radius:10px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:#e7c76a}.auth-card button,.action-button{margin-top:7px}
+.message{padding:11px;margin-top:9px;background:#10253d;border-radius:10px;font-size:13px;white-space:pre-wrap}.small{color:#8fa6bf;font-size:12px}
+.warning{background:#3a2d0e;border:1px solid #705d22;padding:14px;border-radius:11px;color:#eadfbf;font-size:13px}
+.password{margin-top:12px;padding:14px;background:#152915;border:1px solid #4c7145;border-radius:11px;color:#dcf4d7;font-weight:900;word-break:break-all}
+.capsule{margin:9px 0;padding:15px;background:#081625;border:1px solid #29415d;border-radius:13px}.capsule h3{margin:7px 0}.capsule p{color:#8fa6bf;font-size:13px}
+footer{margin-top:45px;padding:23px 10px;text-align:center;border-top:1px solid rgba(255,255,255,.08);color:#7188a4;font-size:12px}
+.hidden{display:none!important}
+
+/* SOLAÇILAN HESAP PANELİ */
+.auth-drawer{
+  position:fixed;inset:0;z-index:1000;visibility:hidden;pointer-events:none;
 }
-
-button{
-  cursor:pointer;
+.auth-drawer.open{visibility:visible;pointer-events:auto}
+.auth-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.68);backdrop-filter:blur(3px);opacity:0;transition:.25s;
 }
-
-
-/* =====================================================
-   ANA
-===================================================== */
-
-.wrap{
-  width:100%;
-  max-width:920px;
-  margin:auto;
-  padding:0 16px 50px;
+.auth-drawer.open .auth-overlay{opacity:1}
+.auth-panel{
+  position:absolute;left:0;top:0;height:100%;width:min(430px,92vw);overflow-y:auto;
+  padding:22px 18px 35px;background:linear-gradient(180deg,#0b192a,#050d17);
+  border-right:1px solid #29415d;box-shadow:18px 0 50px rgba(0,0,0,.45);
+  transform:translateX(-105%);transition:transform .3s ease;
 }
-
-
-/* =====================================================
-   MENÜ
-===================================================== */
-
-.nav{
-  height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.nav-logo{
-  font-size:19px;
-  font-weight:950;
-  letter-spacing:.4px;
-}
-
-.nav-logo span{
-  color:#e7c76a;
-}
-
-.nav-menu{
-  display:flex;
-  gap:7px;
-}
-
-.nav-menu button{
-  background:#0c1a2b;
-  color:#cbd9ea;
-  border:1px solid #263b55;
-  border-radius:9px;
-  padding:7px 11px;
-  font-size:12px;
-}
-
-
-/* =====================================================
-   HERO
-===================================================== */
-
-.hero{
-  text-align:center;
-  padding:48px 8px 25px;
-}
-
-.eyebrow{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:30px;
-
-  background:
-    rgba(231,199,106,.08);
-
-  border:
-    1px solid
-    rgba(231,199,106,.25);
-
-  color:#e7c76a;
-
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.logo{
-  margin:17px 0 6px;
-
-  font-size:
-    clamp(42px,10vw,72px);
-
-  line-height:1;
-  font-weight:950;
-  letter-spacing:-3px;
-}
-
-.logo span{
-  color:#e7c76a;
-}
-
-.tag{
-  max-width:620px;
-  margin:15px auto 0;
-
-  color:#a9bdd7;
-  font-size:17px;
-}
-
-.hero-buttons{
-  margin-top:24px;
-}
-
-.primary,
-.secondary,
-.danger{
-  border-radius:11px;
-  padding:12px 17px;
-  border:0;
-  font-weight:850;
-}
-
-.primary{
-  background:#e7c76a;
-  color:#111;
-}
-
-.secondary{
-  background:#142840;
-  color:#fff;
-  border:1px solid #2b4665;
-}
-
-.danger{
-  background:#7c2630;
-  color:#fff;
-}
-
-
-/* =====================================================
-   TARİH KUTUSU
-===================================================== */
-
-.date-box{
-  max-width:650px;
-  margin:28px auto 0;
-
-  padding:20px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(231,199,106,.11),
-      rgba(12,31,51,.75)
-    );
-
-  border:
-    1px solid
-    rgba(231,199,106,.23);
-
-  border-radius:21px;
-}
-
-.date-title{
-  color:#e7c76a;
-  font-size:14px;
-  font-weight:900;
-  letter-spacing:.4px;
-}
-
-.date-subtitle{
-  margin-top:5px;
-  color:#91a8c3;
-  font-size:12px;
-}
-
-.count{
-  margin-top:8px;
-
-  color:#f5da83;
-
-  font-size:
-    clamp(32px,8vw,55px);
-
-  font-weight:950;
-  line-height:1;
-}
-
-
-/* =====================================================
-   ANLAM KUTUSU
-===================================================== */
-
-.meaning{
-  max-width:650px;
-  margin:15px auto 0;
-
-  padding:14px 16px;
-
-  background:#0b192a;
-  border:1px solid #20364f;
-  border-radius:14px;
-
-  color:#b8c9dc;
-  font-size:13px;
-}
-
-.meaning strong{
-  color:#e7c76a;
-}
-
-
-/* =====================================================
-   İSTATİSTİK
-===================================================== */
-
-.stats{
-  display:grid;
-  grid-template-columns:
-    repeat(4,1fr);
-
-  gap:9px;
-
-  margin:22px 0;
-}
-
-.stat{
-  background:#0b192a;
-  border:1px solid #1e344d;
-  border-radius:15px;
-  padding:15px 7px;
-  text-align:center;
-}
-
-.stat-number{
-  color:#e7c76a;
-  font-size:25px;
-  font-weight:950;
-}
-
-.stat-label{
-  color:#849bb5;
-  font-size:10px;
-  line-height:1.3;
-}
-
-
-/* =====================================================
-   BÖLÜM
-===================================================== */
-
-.section{
-  margin-top:30px;
-}
-
-.section-title{
-  margin:7px 0 4px;
-  font-size:25px;
-  line-height:1.2;
-}
-
-.section-subtitle{
-  margin-top:0;
-  color:#91a8c3;
-  font-size:14px;
-}
-
-
-/* =====================================================
-   KART
-===================================================== */
-
-.card{
-  background:
-    linear-gradient(
-      145deg,
-      rgba(14,29,48,.96),
-      rgba(7,18,31,.97)
-    );
-
-  border:1px solid #20354f;
-  border-radius:18px;
-
-  padding:20px;
-  margin:12px 0;
-}
-
-.badge{
-  display:inline-block;
-
-  background:#173554;
-
-  color:#dcecff;
-
-  padding:5px 9px;
-
-  border-radius:20px;
-
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:.2px;
-}
-
-
-/* =====================================================
-   PROJE MANİFESTOSU
-===================================================== */
-
-.manifesto{
-  text-align:center;
-  padding:27px 20px;
-}
-
-.manifesto h2{
-  font-size:27px;
-  margin:10px 0;
-}
-
-.manifesto p{
-  max-width:650px;
-  margin:9px auto;
-  color:#a9bdd7;
-}
-
-
-/* =====================================================
-   TARİH
-===================================================== */
-
-.timeline{
-  display:grid;
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:10px;
-}
-
-.timeline-item{
-  padding:17px;
-
-  background:#091726;
-
-  border:1px solid #20354e;
-  border-radius:15px;
-}
-
-.timeline-year{
-  color:#e7c76a;
-  font-size:12px;
-  font-weight:900;
-}
-
-.timeline h3{
-  margin:7px 0;
-  font-size:16px;
-}
-
-.timeline p{
-  margin:0;
-  color:#8fa6bf;
-  font-size:13px;
-}
-
-
-/* =====================================================
-   GİRİŞ KAYIT
-===================================================== */
-
-.auth-grid{
-  display:grid;
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:12px;
-}
-
-input,
-textarea,
-select{
-  width:100%;
-
-  padding:12px;
-
-  margin:5px 0;
-
-  background:#071321;
-
-  color:#fff;
-
-  border:
-    1px solid
-    #2a4562;
-
-  border-radius:10px;
-
-  outline:none;
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-  border-color:#e7c76a;
-}
-
-.auth-card button,
-.action-button{
-  margin-top:7px;
-}
-
-.message{
-  padding:11px;
-
-  margin-top:9px;
-
-  background:#10253d;
-
-  border-radius:10px;
-
-  font-size:13px;
-
-  white-space:pre-wrap;
-}
-
-.small{
-  color:#8fa6bf;
-  font-size:12px;
-}
-
-
-/* =====================================================
-   ŞİFRE
-===================================================== */
-
-.warning{
-  background:#3a2d0e;
-  border:1px solid #705d22;
-
-  padding:14px;
-
-  border-radius:11px;
-
-  color:#eadfbf;
-
-  font-size:13px;
-}
-
-.password{
-  margin-top:12px;
-
-  padding:14px;
-
-  background:#152915;
-
-  border:1px solid #4c7145;
-
-  border-radius:11px;
-
-  color:#dcf4d7;
-
-  font-weight:900;
-
-  word-break:break-all;
-}
-
-
-/* =====================================================
-   KAPSÜL
-===================================================== */
-
-.capsule{
-  margin:9px 0;
-
-  padding:15px;
-
-  background:#081625;
-
-  border:
-    1px solid
-    #29415d;
-
-  border-radius:13px;
-}
-
-.capsule h3{
-  margin:7px 0;
-}
-
-.capsule p{
-  color:#8fa6bf;
-  font-size:13px;
-}
-
-
-/* =====================================================
-   FİKİR / YORUM
-===================================================== */
-
-.feedback-grid{
-  display:grid;
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:12px;
-}
-
-.feedback-card{
-  background:#091726;
-  border:1px solid #20364f;
-  border-radius:15px;
-  padding:17px;
-}
-
-.feedback-card h3{
-  margin:8px 0 5px;
-}
-
-.feedback-card p{
-  color:#91a8c3;
-  font-size:13px;
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer{
-  margin-top:45px;
-
-  padding:23px 10px;
-
-  text-align:center;
-
-  border-top:
-    1px solid
-    rgba(255,255,255,.08);
-
-  color:#7188a4;
-
-  font-size:12px;
-}
-
-.hidden{
-  display:none !important;
-}
-
-
-/* =====================================================
-   MOBİL
-===================================================== */
+.auth-drawer.open .auth-panel{transform:translateX(0)}
+.auth-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.auth-head h2{margin:0;font-size:20px}.close-auth{background:#142840;color:#fff;border:1px solid #2b4665;border-radius:9px;width:38px;height:38px;font-size:20px}
+.auth-panel .card{margin:10px 0}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.auth-tabs button{padding:11px;border-radius:10px;border:1px solid #29415d;background:#0b192a;color:#a9bdd7;font-weight:800}
+.auth-tabs button.active{background:#e7c76a;color:#111;border-color:#e7c76a}
+body.drawer-open{overflow:hidden}
 
 @media(max-width:700px){
-
-  .nav-menu{
-    display:none;
-  }
-
-  .hero{
-    padding-top:35px;
-  }
-
-  .stats{
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-  .auth-grid,
-  .feedback-grid,
-  .timeline{
-    grid-template-columns:1fr;
-  }
-
-  .logo{
-    letter-spacing:-2px;
-  }
-
+  .nav-menu{display:none}.hero{padding-top:35px}.stats{grid-template-columns:repeat(2,1fr)}
+  .feedback-grid,.timeline{grid-template-columns:1fr}.logo{letter-spacing:-2px}
 }
-
 </style>
-
 </head>
 
 <body>
-
 <div class="wrap">
 
-
-<!-- =====================================================
-     MENÜ
-===================================================== -->
-
 <nav class="nav">
-
-  <div class="nav-logo">
-    2071 <span>MEKTUP</span>
-  </div>
-
+  <div class="nav-logo">2071 <span>MEKTUP</span></div>
   <div class="nav-menu">
-
-    <button onclick="scrollToId('about')">
-      Hakkında
-    </button>
-
-    <button onclick="scrollToId('auth')">
-      Giriş
-    </button>
-
-    <button onclick="scrollToId('feedback')">
-      Fikir
-    </button>
-
+    <button onclick="scrollToId('about')">Hakkında</button>
+    <button onclick="openAuth('login')">Giriş</button>
+    <button onclick="scrollToId('feedback')">Fikir</button>
   </div>
-
 </nav>
 
-
-<!-- =====================================================
-     HERO
-===================================================== -->
-
 <section class="hero">
-
-  <div class="eyebrow">
-    GELECEĞE BIRAKILAN DİJİTAL MİRAS
-  </div>
-
-  <div class="logo">
-    2071 <span>MEKTUP</span>
-  </div>
-
-  <div class="tag">
-    Bugünü mühürle, geleceğe bırak.
-    Bir mektup, bir fotoğraf, bir ses...
-    2071'de birileri bugünümüzü okuyacak.
-  </div>
-
-
+  <div class="eyebrow">GELECEĞE BIRAKILAN DİJİTAL MİRAS</div>
+  <div class="logo">2071 <span>MEKTUP</span></div>
+  <div class="tag">Bugünü mühürle, geleceğe bırak.<br>Bir mektup, bir fotoğraf, bir ses...<br>2071'de birileri bugünümüzü okuyacak.</div>
   <div class="hero-buttons">
-
-    <button
-      class="primary"
-      onclick="goRegister()"
-    >
-      ✉️ Geleceğe Mektup Bırak
-    </button>
-
-    <button
-      class="secondary"
-      onclick="scrollToId('about')"
-    >
-      2071 Mektup Nedir?
-    </button>
-
+    <button class="primary" onclick="openAuth('register')">✉️ Geleceğe Mektup Bırak</button>
+    <button class="secondary" onclick="scrollToId('about')">2071 Mektup Nedir?</button>
   </div>
-
-
-  <!-- ===================================================
-       26 AĞUSTOS
-  ==================================================== -->
 
   <div class="date-box">
-
-    <div class="date-title">
-      🇹🇷 26 AĞUSTOS 2071
-    </div>
-
-    <div class="date-subtitle">
-      Geleceğe bırakılan dosyaların açılacağı tarih
-    </div>
-
-    <div
-      class="count"
-      id="count"
-    >
-      Hesaplanıyor...
-    </div>
-
+    <div class="date-title">🇹🇷 26 AĞUSTOS 2071</div>
+    <div class="date-subtitle">Geleceğe bırakılan dosyaların açılacağı tarih</div>
+    <div class="count" id="count">Hesaplanıyor...</div>
   </div>
-
-
-  <div class="meaning">
-
-    <strong>26 Ağustos neden?</strong>
-
-    <br>
-
-    26 Ağustos 1071'de başlayan
-    Malazgirt Zaferi'nin hatırasına;
-    2071'de açılacak bu dijital arşiv,
-    bugünün insanından geleceğin insanına
-    bırakılmış bir hatıra olsun.
-
-  </div>
-
 </section>
-
-
-<!-- =====================================================
-     İSTATİSTİK
-===================================================== -->
 
 <section class="stats">
-
-  <div class="stat">
-
-    <div
-      class="stat-number"
-      id="statLetters"
-    >
-      0
-    </div>
-
-    <div class="stat-label">
-      Geleceğe Gönderilen Mektup
-    </div>
-
-  </div>
-
-
-  <div class="stat">
-
-    <div
-      class="stat-number"
-      id="statFiles"
-    >
-      0
-    </div>
-
-    <div class="stat-label">
-      Gönderilen Dosya
-    </div>
-
-  </div>
-
-
-  <div class="stat">
-
-    <div
-      class="stat-number"
-      id="statUsers"
-    >
-      0
-    </div>
-
-    <div class="stat-label">
-      Katılımcı
-    </div>
-
-  </div>
-
-
-  <div class="stat">
-
-    <div
-      class="stat-number"
-      id="statFeedback"
-    >
-      0
-    </div>
-
-    <div class="stat-label">
-      Fikir / Yorum
-    </div>
-
-  </div>
-
+  <div class="stat"><div class="stat-number" id="statLetters">0</div><div class="stat-label">Geleceğe Gönderilen Mektup</div></div>
+  <div class="stat"><div class="stat-number" id="statFiles">0</div><div class="stat-label">Gönderilen Dosya</div></div>
+  <div class="stat"><div class="stat-number" id="statUsers">0</div><div class="stat-label">Katılımcı</div></div>
+  <div class="stat"><div class="stat-number" id="statFeedback">0</div><div class="stat-label">Fikir / Yorum</div></div>
 </section>
 
-
-<!-- =====================================================
-     HAKKINDA
-===================================================== -->
-
-<section
-  class="section"
-  id="about"
->
-
+<section class="section" id="about">
   <div class="card">
-
-    <span class="badge">
-      🌍 PROJE HAKKINDA
-    </span>
-
-    <h2 class="section-title">
-      Bugünden 2071'e bir iz bırak.
-    </h2>
-
-    <p>
-      2071 Mektup; insanların bugünden geleceğe
-      mektup, not, fotoğraf, ses, video ve belge
-      bırakabilmesi için oluşturulan dijital
-      zaman kapsülü projesidir.
-    </p>
-
-    <p>
-      Bugün sıradan görünen bir fotoğraf,
-      birkaç satırlık bir mektup veya bir ses
-      kaydı, 45 yıl sonra çok değerli bir
-      tarihî hatıraya dönüşebilir.
-    </p>
-
-    <p>
-      Buradaki amaç yalnızca dosya saklamak değil;
-      <b>bugünün insanı ile geleceğin insanı
-      arasında bir köprü kurmaktır.</b>
-    </p>
-
+    <span class="badge">🌍 PROJE HAKKINDA</span>
+    <h2 class="section-title">Bugünden 2071'e bir iz bırak.</h2>
+    <p>2071 Mektup; insanların bugünden geleceğe mektup, not, fotoğraf, ses, video ve belge bırakabilmesi için oluşturulan dijital zaman kapsülü projesidir.</p>
+    <p>Bugün sıradan görünen bir fotoğraf, birkaç satırlık bir mektup veya bir ses kaydı, 45 yıl sonra çok değerli bir tarihî hatıraya dönüşebilir.</p>
+    <p>Buradaki amaç yalnızca dosya saklamak değil; <b>bugünün insanı ile geleceğin insanı arasında bir köprü kurmaktır.</b></p>
   </div>
-
 
   <div class="card manifesto">
-
-    <span class="badge">
-      🕰️ BİZİM FİKRİMİZ
-    </span>
-
-    <h2>
-      2071'de bugünümüz konuşacak.
-    </h2>
-
-    <p>
-      İnsanlar 2071'de yalnızca büyük tarih
-      olaylarını değil, sıradan insanların
-      nasıl yaşadığını da merak edecek.
-    </p>
-
-    <p>
-      Ne düşündük?
-      Neyi sevdik?
-      Çocuklarımız için ne hayal ettik?
-      Nasıl bir Türkiye'de yaşadık?
-    </p>
-
-    <p>
-      <b>
-        Cevabı bugün biz bırakabiliriz.
-      </b>
-    </p>
-
+    <span class="badge">🕰️ BİZİM FİKRİMİZ</span>
+    <h2>2071'de bugünümüz konuşacak.</h2>
+    <p>İnsanlar 2071'de yalnızca büyük tarih olaylarını değil, sıradan insanların nasıl yaşadığını da merak edecek.</p>
+    <p>Ne düşündük? Neyi sevdik? Çocuklarımız için ne hayal ettik? Nasıl bir Türkiye'de yaşadık?</p>
+    <p><b>Cevabı bugün biz bırakabiliriz.</b></p>
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     TARİHSEL ANLAM
-===================================================== -->
-
 <section class="section">
-
-  <span class="badge">
-    🇹🇷 26 AĞUSTOS
-  </span>
-
-  <h2 class="section-title">
-    Bir tarihten diğerine
-  </h2>
-
-  <p class="section-subtitle">
-    Geçmişten geleceğe uzanan sembolik bir tarih.
-  </p>
-
-
+  <span class="badge">🇹🇷 26 AĞUSTOS</span>
+  <h2 class="section-title">Bir tarihten diğerine</h2>
+  <p class="section-subtitle">Geçmişten geleceğe uzanan sembolik bir tarih.</p>
   <div class="timeline">
-
     <div class="timeline-item">
-
-      <div class="timeline-year">
-        26 AĞUSTOS 1071
-      </div>
-
-      <h3>
-        Malazgirt
-      </h3>
-
-      <p>
-        Anadolu tarihinin dönüm noktalarından
-        biri olarak kabul edilen Malazgirt
-        Zaferi'nin tarihi.
-      </p>
-
+      <div class="timeline-year">26 AĞUSTOS 1071</div>
+      <h3>Malazgirt</h3>
+      <p>Anadolu tarihinin dönüm noktalarından biri olarak kabul edilen Malazgirt Zaferi'nin tarihi.</p>
     </div>
-
-
     <div class="timeline-item">
-
-      <div class="timeline-year">
-        2026
-      </div>
-
-      <h3>
-        Bizim zamanımız
-      </h3>
-
-      <p>
-        Bugünün insanı geleceğe kendi sözünü,
-        hatırasını ve hikâyesini bırakıyor.
-      </p>
-
+      <div class="timeline-year">2026</div>
+      <h3>Bizim zamanımız</h3>
+      <p>Bugünün insanı geleceğe kendi sözünü, hatırasını ve hikâyesini bırakıyor.</p>
     </div>
-
-
     <div class="timeline-item">
-
-      <div class="timeline-year">
-        26 AĞUSTOS 2071
-      </div>
-
-      <h3>
-        Dosyalar açılıyor
-      </h3>
-
-      <p>
-        Geleceğin insanı geçmişten bırakılan
-        dijital hatıralarla buluşuyor.
-      </p>
-
+      <div class="timeline-year">26 AĞUSTOS 2071</div>
+      <h3>Dosyalar açılıyor</h3>
+      <p>Geleceğin insanı geçmişten bırakılan dijital hatıralarla buluşuyor.</p>
     </div>
-
   </div>
-
 </section>
-
-
-<!-- =====================================================
-     ÇAĞRI
-===================================================== -->
 
 <section class="section">
-
   <div class="card manifesto">
-
-    <span class="badge">
-      ✉️ SIRA SİZDE
-    </span>
-
-    <h2>
-      Belki 2071'de biri sizin mektubunuzu okuyacak.
-    </h2>
-
-    <p>
-      Ailenize, çocuklarınıza, torunlarınıza
-      veya gelecekte hiç tanımadığınız birine
-      bir şey söylemek ister misiniz?
-    </p>
-
-    <button
-      class="primary action-button"
-      onclick="goRegister()"
-    >
-      ✉️ Geleceğe Mektup Bırak
-    </button>
-
+    <span class="badge">✉️ SIRA SİZDE</span>
+    <h2>Belki 2071'de biri sizin mektubunuzu okuyacak.</h2>
+    <p>Ailenize, çocuklarınıza, torunlarınıza veya gelecekte hiç tanımadığınız birine bir şey söylemek ister misiniz?</p>
+    <button class="primary action-button" onclick="openAuth('register')">✉️ Geleceğe Mektup Bırak</button>
   </div>
-
 </section>
 
+<!-- GİRİŞ/KAYIT ARTIK SAYFADA DEĞİL; SOL PANELDE AÇILIR -->
 
-<!-- =====================================================
-     KAYIT / GİRİŞ
-===================================================== -->
-
-<section
-  class="section"
-  id="auth"
->
-
-  <span class="badge">
-    🔐 GÜVENLİ HESAP
-  </span>
-
-  <h2 class="section-title">
-    Önce hesabınızı oluşturun
-  </h2>
-
-  <p class="section-subtitle">
-    Kapsül oluşturmak ve geleceğe dosya bırakmak
-    için kayıt olmanız gerekir.
-  </p>
-
-
-  <div class="auth-grid">
-
-
-    <!-- KAYIT -->
-
-    <section
-      class="card auth-card"
-      id="registerCard"
-    >
-
-      <span class="badge">
-        👤 YENİ KULLANICI
-      </span>
-
-      <h2>
-        Kayıt Ol
-      </h2>
-
-      <p class="small">
-        Yeni hesap oluşturun.
-        İlk test kapsülünüz ücretsizdir.
-      </p>
-
-      <input
-        id="registerName"
-        placeholder="Ad Soyad"
-        autocomplete="name"
-      >
-
-      <input
-        id="registerEmail"
-        type="email"
-        placeholder="E-posta"
-        autocomplete="email"
-      >
-
-      <button
-        class="primary"
-        onclick="registerUser()"
-      >
-        Kayıt Ol
-      </button>
-
-      <div id="registerMessage"></div>
-
-    </section>
-
-
-    <!-- GİRİŞ -->
-
-    <section
-      class="card auth-card"
-      id="loginCard"
-    >
-
-      <span class="badge">
-        🔑 HESABIM
-      </span>
-
-      <h2>
-        Giriş Yap
-      </h2>
-
-      <p class="small">
-        Hesabınız varsa buradan giriş yapabilirsiniz.
-      </p>
-
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="E-posta"
-        autocomplete="email"
-      >
-
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="Şifre"
-        autocomplete="current-password"
-      >
-
-      <button
-        class="primary"
-        onclick="loginUser()"
-      >
-        Giriş Yap
-      </button>
-
-      <div id="loginMessage"></div>
-
-    </section>
-
-  </div>
-
+<section class="card hidden" id="passwordCard">
+  <span class="badge">🔑 ŞİFRENİZ</span><h2>Hesabınız oluşturuldu</h2>
+  <div class="warning"><b>ÖNEMLİ</b><p>Sistem sizin için bir başlangıç şifresi oluşturdu.</p><p>Bu şifreyi güvenli bir yerde saklayın.</p></div>
+  <div class="password" id="generatedPassword"></div>
 </section>
 
-
-<!-- =====================================================
-     ŞİFRE
-===================================================== -->
-
-<section
-  class="card hidden"
-  id="passwordCard"
->
-
-  <span class="badge">
-    🔑 ŞİFRENİZ
-  </span>
-
-  <h2>
-    Hesabınız oluşturuldu
-  </h2>
-
-  <div class="warning">
-
-    <b>ÖNEMLİ</b>
-
-    <p>
-      Sistem sizin için bir başlangıç şifresi
-      oluşturdu.
-    </p>
-
-    <p>
-      Bu şifreyi güvenli bir yerde saklayın.
-      Şifrenizi kaybetmeniz durumunda hesabınıza
-      erişim sorunları yaşayabilirsiniz.
-    </p>
-
-  </div>
-
-  <div
-    class="password"
-    id="generatedPassword"
-  ></div>
-
+<section class="card hidden" id="accountCard">
+  <span class="badge">👤 HESABIM</span><h2 id="welcome"></h2><p id="accountInfo"></p>
+  <button class="danger action-button" onclick="logout()">Çıkış Yap</button>
 </section>
 
-
-<!-- =====================================================
-     HESAP
-===================================================== -->
-
-<section
-  class="card hidden"
-  id="accountCard"
->
-
-  <span class="badge">
-    👤 HESABIM
-  </span>
-
-  <h2 id="welcome"></h2>
-
-  <p id="accountInfo"></p>
-
-  <button
-    class="danger action-button"
-    onclick="logout()"
-  >
-    Çıkış Yap
-  </button>
-
-</section>
-
-
-<!-- =====================================================
-     TEST
-===================================================== -->
-
-<section
-  class="card hidden"
-  id="testCard"
->
-
-  <span class="badge">
-    🧪 ÜCRETSİZ TEST
-  </span>
-
-  <h2>
-    Önce sistemi deneyin
-  </h2>
-
-  <p>
-    Her kullanıcıya bir adet ücretsiz test
-    kapsülü verilir.
-  </p>
-
-  <button
-    class="primary action-button"
-    id="testButton"
-    onclick="createTestCapsule()"
-  >
-    🧪 Test Kapsülü Oluştur
-  </button>
-
+<section class="card hidden" id="testCard">
+  <span class="badge">🧪 ÜCRETSİZ TEST</span><h2>Önce sistemi deneyin</h2>
+  <p>Her kullanıcıya bir adet ücretsiz test kapsülü verilir.</p>
+  <button class="primary action-button" id="testButton" onclick="createTestCapsule()">🧪 Test Kapsülü Oluştur</button>
   <div id="testMessage"></div>
-
 </section>
 
-
-<!-- =====================================================
-     GERÇEK KAPSÜL
-===================================================== -->
-
-<section
-  class="card hidden"
-  id="realCard"
->
-
-  <span class="badge">
-    🔐 GERÇEK KAPSÜL
-  </span>
-
-  <h2>
-    Yeni Gerçek Kapsül
-  </h2>
-
-  <input
-    id="capsuleTitle"
-    placeholder="Aileme 2071 mektubu"
-  >
-
-  <textarea
-    id="capsuleDescription"
-    rows="3"
-    placeholder="Bu kapsül hakkında kısa açıklama..."
-  ></textarea>
-
-  <button
-    class="primary action-button"
-    onclick="createRealCapsule()"
-  >
-    Gerçek Kapsül Oluştur
-  </button>
-
+<section class="card hidden" id="realCard">
+  <span class="badge">🔐 GERÇEK KAPSÜL</span><h2>Yeni Gerçek Kapsül</h2>
+  <input id="capsuleTitle" placeholder="Aileme 2071 mektubu">
+  <textarea id="capsuleDescription" rows="3" placeholder="Bu kapsül hakkında kısa açıklama..."></textarea>
+  <button class="primary action-button" onclick="createRealCapsule()">Gerçek Kapsül Oluştur</button>
   <div id="realMessage"></div>
-
 </section>
 
-
-<!-- =====================================================
-     İÇERİK
-===================================================== -->
-
-<section
-  class="card hidden"
-  id="entryCard"
->
-
-  <span class="badge">
-    ✉️ İÇERİK
-  </span>
-
-  <h2>
-    Kapsüle İçerik Ekle
-  </h2>
-
+<section class="card hidden" id="entryCard">
+  <span class="badge">✉️ İÇERİK</span><h2>Kapsüle İçerik Ekle</h2>
   <select id="entryType">
-
-    <option value="letter">
-      ✉️ Mektup
-    </option>
-
-    <option value="note">
-      📝 Not
-    </option>
-
-    <option value="photo">
-      📷 Fotoğraf
-    </option>
-
-    <option value="video">
-      🎬 Video
-    </option>
-
-    <option value="audio">
-      🎵 Ses
-    </option>
-
-    <option value="document">
-      📄 Belge
-    </option>
-
+    <option value="letter">✉️ Mektup</option><option value="note">📝 Not</option><option value="photo">📷 Fotoğraf</option>
+    <option value="video">🎬 Video</option><option value="audio">🎵 Ses</option><option value="document">📄 Belge</option>
   </select>
-
-  <input
-    id="entryTitle"
-    placeholder="İçerik başlığı"
-  >
-
-  <textarea
-    id="entryContent"
-    rows="8"
-    placeholder="Geleceğe bırakmak istediğiniz mesaj..."
-  ></textarea>
-
-  <button
-    class="primary action-button"
-    onclick="addEntry()"
-  >
-    İçeriği Kapsüle Ekle
-  </button>
-
+  <input id="entryTitle" placeholder="İçerik başlığı">
+  <textarea id="entryContent" rows="8" placeholder="Geleceğe bırakmak istediğiniz mesaj..."></textarea>
+  <button class="primary action-button" onclick="addEntry()">İçeriği Kapsüle Ekle</button>
   <div id="entryMessage"></div>
-
 </section>
 
-
-<!-- =====================================================
-     KİLİT
-===================================================== -->
-
-<section
-  class="card hidden"
-  id="lockCard"
->
-
-  <span class="badge">
-    🔒 KALICI MÜHÜR
-  </span>
-
-  <h2>
-    Kapsülü Geleceğe Mühürle
-  </h2>
-
-  <div class="warning">
-
-    <b>DİKKAT</b>
-
-    <p>
-      Kapsül kilitlendikten sonra açılış tarihi
-      değiştirilemez.
-    </p>
-
-    <p>
-      Yeni içerik eklenemez.
-    </p>
-
-    <p>
-      Bu işlem geri alınamaz.
-    </p>
-
-  </div>
-
-  <label>
-    Açılış tarihi
-  </label>
-
-  <input
-    id="unlockDate"
-    type="datetime-local"
-    value="2071-08-26T00:00"
-  >
-
-  <button
-    class="primary action-button"
-    onclick="lockCapsule()"
-  >
-    🔒 KALICI OLARAK MÜHÜRLE
-  </button>
-
+<section class="card hidden" id="lockCard">
+  <span class="badge">🔒 KALICI MÜHÜR</span><h2>Kapsülü Geleceğe Mühürle</h2>
+  <div class="warning"><b>DİKKAT</b><p>Kapsül kilitlendikten sonra açılış tarihi değiştirilemez.</p><p>Yeni içerik eklenemez.</p><p>Bu işlem geri alınamaz.</p></div>
+  <label>Açılış tarihi</label>
+  <input id="unlockDate" type="datetime-local" value="2071-08-26T00:00">
+  <button class="primary action-button" onclick="lockCapsule()">🔒 KALICI OLARAK MÜHÜRLE</button>
   <div id="lockMessage"></div>
-
 </section>
 
-
-<!-- =====================================================
-     KAPSÜLLER
-===================================================== -->
-
-<section
-  class="card hidden"
-  id="capsulesCard"
->
-
-  <span class="badge">
-    📚 KAPSÜLLERİM
-  </span>
-
-  <h2>
-    Kapsüllerim
-  </h2>
-
-  <button
-    class="secondary action-button"
-    onclick="loadCapsules()"
-  >
-    ↻ Yenile
-  </button>
-
-  <div id="capsuleList">
-    Henüz kapsül bulunmuyor.
-  </div>
-
+<section class="card hidden" id="capsulesCard">
+  <span class="badge">📚 KAPSÜLLERİM</span><h2>Kapsüllerim</h2>
+  <button class="secondary action-button" onclick="loadCapsules()">↻ Yenile</button>
+  <div id="capsuleList">Henüz kapsül bulunmuyor.</div>
 </section>
 
-
-<!-- =====================================================
-     FİKİR / YORUM
-===================================================== -->
-
-<section
-  class="section"
-  id="feedback"
->
-
-  <span class="badge">
-    💬 FİKİR VE YORUM
-  </span>
-
-  <h2 class="section-title">
-    2071 Mektup'u birlikte geliştirelim
-  </h2>
-
-  <p class="section-subtitle">
-    Mesaj gönderenler, yorum yapanlar ve fikir
-    verenler bu projenin bir parçasıdır.
-  </p>
-
-
+<section class="section" id="feedback">
+  <span class="badge">💬 FİKİR VE YORUM</span>
+  <h2 class="section-title">2071 Mektup'u birlikte geliştirelim</h2>
+  <p class="section-subtitle">Mesaj gönderenler, yorum yapanlar ve fikir verenler bu projenin bir parçasıdır.</p>
   <div class="feedback-grid">
-
-
-    <div class="feedback-card">
-
-      <h3>
-        💡 Fikir Ver
-      </h3>
-
-      <p>
-        Uygulamaya hangi özelliklerin eklenmesini
-        istersiniz?
-      </p>
-
-      <button
-        class="secondary"
-        onclick="goFeedback('idea')"
-      >
-        Fikrimi Paylaş
-      </button>
-
-    </div>
-
-
-    <div class="feedback-card">
-
-      <h3>
-        💬 Yorum Yap
-      </h3>
-
-      <p>
-        Proje hakkında düşüncenizi ve önerinizi
-        paylaşabilirsiniz.
-      </p>
-
-      <button
-        class="secondary"
-        onclick="goFeedback('comment')"
-      >
-        Yorum Yap
-      </button>
-
-    </div>
-
+    <div class="feedback-card"><h3>💡 Fikir Ver</h3><p>Uygulamaya hangi özelliklerin eklenmesini istersiniz?</p><button class="secondary" onclick="goFeedback('idea')">Fikrimi Paylaş</button></div>
+    <div class="feedback-card"><h3>💬 Yorum Yap</h3><p>Proje hakkında düşüncenizi ve önerinizi paylaşabilirsiniz.</p><button class="secondary" onclick="goFeedback('comment')">Yorum Yap</button></div>
   </div>
-
-
-  <!-- FİKİR FORMU -->
-
-  <div
-    class="card"
-    id="feedbackFormCard"
-  >
-
-    <h3>
-      📝 Mesajınızı bırakın
-    </h3>
-
-    <p class="small">
-      Adınız ve mesajınız gelecekte projenin
-      gelişmesine katkı sağlayabilir.
-    </p>
-
-    <input
-      id="feedbackName"
-      placeholder="Adınız"
-      maxlength="100"
-    >
-
-    <select id="feedbackType">
-
-      <option value="idea">
-        💡 Fikir
-      </option>
-
-      <option value="comment">
-        💬 Yorum
-      </option>
-
-      <option value="suggestion">
-        🛠️ Öneri
-      </option>
-
-      <option value="message">
-        ✉️ Mesaj
-      </option>
-
-    </select>
-
-    <textarea
-      id="feedbackContent"
-      rows="5"
-      maxlength="2000"
-      placeholder="Mesajınızı yazın..."
-    ></textarea>
-
-    <button
-      class="primary action-button"
-      onclick="sendFeedback()"
-    >
-      Gönder
-    </button>
-
-    <div id="feedbackMessage"></div>
-
+  <div class="card" id="feedbackFormCard">
+    <h3>📝 Mesajınızı bırakın</h3><p class="small">Adınız ve mesajınız gelecekte projenin gelişmesine katkı sağlayabilir.</p>
+    <input id="feedbackName" placeholder="Adınız" maxlength="100">
+    <select id="feedbackType"><option value="idea">💡 Fikir</option><option value="comment">💬 Yorum</option><option value="suggestion">🛠️ Öneri</option><option value="message">✉️ Mesaj</option></select>
+    <textarea id="feedbackContent" rows="5" maxlength="2000" placeholder="Mesajınızı yazın..."></textarea>
+    <button class="primary action-button" onclick="sendFeedback()">Gönder</button><div id="feedbackMessage"></div>
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer>
-
-  <b>2071 MEKTUP</b>
-
-  <br>
-
-  Bugünü mühürle, geleceğe bırak.
-
-  <br><br>
-
-  26 Ağustos 2071
-
-  <br>
-
-  © 2026 2071 Mektup
-
-</footer>
-
-
+<footer><b>2071 MEKTUP</b><br>Bugünü mühürle, geleceğe bırak.<br><br>26 Ağustos 2071<br>© 2026 2071 Mektup</footer>
 </div>
 
+<!-- SOL HESAP WIDGET / DRAWER -->
+<div class="auth-drawer" id="authDrawer" aria-hidden="true">
+  <div class="auth-overlay" onclick="closeAuth()"></div>
+  <aside class="auth-panel">
+    <div class="auth-head">
+      <h2>🔐 Güvenli Hesap</h2>
+      <button class="close-auth" onclick="closeAuth()" aria-label="Kapat">×</button>
+    </div>
+
+    <div class="auth-tabs">
+      <button id="registerTab" onclick="switchAuth('register')">👤 Kayıt Ol</button>
+      <button id="loginTab" onclick="switchAuth('login')">🔑 Giriş Yap</button>
+    </div>
+
+    <section class="card auth-card" id="registerCard">
+      <span class="badge">👤 YENİ KULLANICI</span>
+      <h2>Kayıt Ol</h2>
+      <p class="small">Yeni hesap oluşturun. İlk test kapsülünüz ücretsizdir.</p>
+      <input id="registerName" placeholder="Ad Soyad" autocomplete="name">
+      <input id="registerEmail" type="email" placeholder="E-posta" autocomplete="email">
+      <button class="primary" onclick="registerUser()">Kayıt Ol</button>
+      <div id="registerMessage"></div>
+    </section>
+
+    <section class="card auth-card hidden" id="loginCard">
+      <span class="badge">🔑 HESABIM</span>
+      <h2>Giriş Yap</h2>
+      <p class="small">Hesabınız varsa buradan giriş yapabilirsiniz.</p>
+      <input id="loginEmail" type="email" placeholder="E-posta" autocomplete="email">
+      <input id="loginPassword" type="password" placeholder="Şifre" autocomplete="current-password">
+      <button class="primary" onclick="loginUser()">Giriş Yap</button>
+      <div id="loginMessage"></div>
+    </section>
+
+    <div class="card hidden" id="drawerAccountCard">
+      <span class="badge">👤 HESABIM</span>
+      <h2 id="drawerWelcome"></h2>
+      <p id="drawerAccountInfo"></p>
+      <button class="danger" onclick="logout()">Çıkış Yap</button>
+    </div>
+  </aside>
+</div>
 
 <script>
+const API="https://2071mektup.vedataygun0206.workers.dev";
+let token=localStorage.getItem("2071_token");
+let currentCapsuleId=localStorage.getItem("2071_capsule_id");
+function $(id){return document.getElementById(id)}
+function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+function scrollToId(id){const e=$(id);if(e)e.scrollIntoView({behavior:"smooth",block:"start"})}
 
-/* =====================================================
-   API
-===================================================== */
-
-const API =
-  "https://2071mektup.vedataygun0206.workers.dev";
-
-
-/* =====================================================
-   DURUM
-===================================================== */
-
-let token =
-  localStorage.getItem("2071_token");
-
-let currentCapsuleId =
-  localStorage.getItem("2071_capsule_id");
-
-
-/* =====================================================
-   KISA DOM
-===================================================== */
-
-function $(id){
-  return document.getElementById(id);
+function openAuth(mode="register"){
+  $("authDrawer").classList.add("open");
+  $("authDrawer").setAttribute("aria-hidden","false");
+  document.body.classList.add("drawer-open");
+  switchAuth(mode);
 }
-
-
-/* =====================================================
-   SCROLL
-===================================================== */
-
-function scrollToId(id){
-
-  const element = $(id);
-
-  if(!element){
-    return;
-  }
-
-  element.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
-
+function closeAuth(){
+  $("authDrawer").classList.remove("open");
+  $("authDrawer").setAttribute("aria-hidden","true");
+  document.body.classList.remove("drawer-open");
 }
-
-
-/* =====================================================
-   KAYDA YÖNLENDİR
-===================================================== */
-
-function goRegister(){
-
-  scrollToId("auth");
-
-  setTimeout(() => {
-
-    $("registerName")?.focus();
-
-  },500);
-
+function switchAuth(mode){
+  const reg=mode==="register";
+  $("registerCard").classList.toggle("hidden",!reg);
+  $("loginCard").classList.toggle("hidden",reg);
+  $("registerTab").classList.toggle("active",reg);
+  $("loginTab").classList.toggle("active",!reg);
+  setTimeout(()=>$(reg?"registerName":"loginEmail")?.focus(),180);
 }
+function goRegister(){openAuth("register")}
+function goFeedback(type){scrollToId("feedbackFormCard");setTimeout(()=>{$("feedbackType").value=type||"idea";$("feedbackContent").focus()},300)}
 
-
-/* =====================================================
-   GERİ BİLDİRİM FORMUNA GİT
-===================================================== */
-
-function goFeedback(type){
-
-  scrollToId("feedbackFormCard");
-
-  setTimeout(() => {
-
-    if($("feedbackType")){
-      $("feedbackType").value =
-        type || "idea";
-    }
-
-    $("feedbackContent")?.focus();
-
-  },400);
-
+async function api(path,options={}){
+  const headers={"Content-Type":"application/json",...(options.headers||{})};
+  if(token)headers.Authorization="Bearer "+token;
+  const response=await fetch(API+path,{...options,headers});
+  let data;try{data=await response.json()}catch{data={ok:false,error:"Sunucudan geçersiz cevap geldi."}}
+  return {response,data};
 }
-
-
-/* =====================================================
-   API
-===================================================== */
-
-async function api(
-  path,
-  options = {}
-){
-
-  const headers = {
-
-    "Content-Type":
-      "application/json",
-
-    ...(options.headers || {})
-
-  };
-
-
-  if(token){
-
-    headers.Authorization =
-      "Bearer " + token;
-
-  }
-
-
-  const response =
-    await fetch(
-      API + path,
-      {
-        ...options,
-        headers
-      }
-    );
-
-
-  let data;
-
-
-  try{
-
-    data =
-      await response.json();
-
-  }catch{
-
-    data = {
-
-      ok:false,
-
-      error:
-        "Sunucudan geçersiz cevap geldi."
-
-    };
-
-  }
-
-
-  return {
-    response,
-    data
-  };
-
-}
-
-
-/* =====================================================
-   MESAJ
-===================================================== */
-
-function showMessage(
-  element,
-  text
-){
-
-  if(!element){
-    return;
-  }
-
-
-  element.innerHTML =
-    `<div class="message">${
-      escapeHtml(text)
-    }</div>`;
-
-}
-
-
-/* =====================================================
-   HTML GÜVENLİĞİ
-===================================================== */
-
-function escapeHtml(value){
-
-  return String(value ?? "")
-
-    .replaceAll("&","&amp;")
-
-    .replaceAll("<","&lt;")
-
-    .replaceAll(">","&gt;")
-
-    .replaceAll('"',"&quot;")
-
-    .replaceAll("'","&#039;");
-
-}
-
-
-/* =====================================================
-   KAYIT
-===================================================== */
+function showMessage(el,text){if(el)el.innerHTML=`<div class="message">${escapeHtml(text)}</div>`}
 
 async function registerUser(){
-
-  const name =
-    $("registerName")
-      ?.value
-      .trim();
-
-  const email =
-    $("registerEmail")
-      ?.value
-      .trim();
-
-  const message =
-    $("registerMessage");
-
-
-  if(!name){
-
-    showMessage(
-      message,
-      "Ad soyad gerekli."
-    );
-
-    return;
-
-  }
-
-
-  if(!email){
-
-    showMessage(
-      message,
-      "E-posta adresi gerekli."
-    );
-
-    return;
-
-  }
-
-
-  message.innerHTML =
-    "Kayıt oluşturuluyor...";
-
-
+  const name=$("registerName").value.trim(),email=$("registerEmail").value.trim(),message=$("registerMessage");
+  if(!name)return showMessage(message,"Ad soyad gerekli.");
+  if(!email)return showMessage(message,"E-posta adresi gerekli.");
+  message.textContent="Kayıt oluşturuluyor...";
   try{
-
-    const result =
-      await api(
-        "/api/register",
-        {
-          method:"POST",
-
-          body:
-            JSON.stringify({
-
-              name,
-              email
-
-            })
-
-        }
-      );
-
-
-    if(!result.data.ok){
-
-      showMessage(
-        message,
-        result.data.error ||
-        "Kayıt başarısız."
-      );
-
-      return;
-
-    }
-
-
-    showMessage(
-      message,
-      result.data.message ||
-      "Kayıt başarılı."
-    );
-
-
-    const password =
-      result.data
-        ?.credentials
-        ?.password;
-
-
+    const r=await api("/api/register",{method:"POST",body:JSON.stringify({name,email})});
+    if(!r.data.ok)return showMessage(message,r.data.error||"Kayıt başarısız.");
+    showMessage(message,r.data.message||"Kayıt başarılı.");
+    const password=r.data?.credentials?.password;
     if(password){
-
-      $("passwordCard")
-        ?.classList
-        .remove("hidden");
-
-
-      $("generatedPassword")
-        .textContent =
-        password;
-
-
-      $("loginEmail")
-        .value =
-        email;
-
-
-      $("loginPassword")
-        .value =
-        password;
-
-
-      $("passwordCard")
-        ?.scrollIntoView({
-          behavior:"smooth",
-          block:"center"
-        });
-
+      $("passwordCard").classList.remove("hidden");$("generatedPassword").textContent=password;
+      $("loginEmail").value=email;$("loginPassword").value=password;
+      switchAuth("login");
     }
-
-  }catch(err){
-
-    showMessage(
-      message,
-      "Sunucuya bağlanılamadı: " +
-      err.message
-    );
-
-  }
-
+  }catch(e){showMessage(message,"Sunucuya bağlanılamadı: "+e.message)}
 }
-
-
-/* =====================================================
-   GİRİŞ
-===================================================== */
 
 async function loginUser(){
-
-  const email =
-    $("loginEmail")
-      ?.value
-      .trim();
-
-  const password =
-    $("loginPassword")
-      ?.value;
-
-  const message =
-    $("loginMessage");
-
-
-  if(!email || !password){
-
-    showMessage(
-      message,
-      "E-posta ve şifre gerekli."
-    );
-
-    return;
-
-  }
-
-
-  message.innerHTML =
-    "Giriş yapılıyor...";
-
-
+  const email=$("loginEmail").value.trim(),password=$("loginPassword").value,message=$("loginMessage");
+  if(!email||!password)return showMessage(message,"E-posta ve şifre gerekli.");
+  message.textContent="Giriş yapılıyor...";
   try{
-
-    const result =
-      await api(
-        "/api/login",
-        {
-          method:"POST",
-
-          body:
-            JSON.stringify({
-
-              email,
-              password
-
-            })
-
-        }
-      );
-
-
-    if(!result.data.ok){
-
-      showMessage(
-        message,
-        result.data.error ||
-        "Giriş başarısız."
-      );
-
-      return;
-
-    }
-
-
-    token =
-      result.data.token;
-
-
-    localStorage.setItem(
-      "2071_token",
-      token
-    );
-
-
-    showLoggedIn(
-      result.data.user
-    );
-
-
-    await loadCapsules();
-
-
-  }catch(err){
-
-    showMessage(
-      message,
-      "Sunucuya bağlanılamadı: " +
-      err.message
-    );
-
-  }
-
+    const r=await api("/api/login",{method:"POST",body:JSON.stringify({email,password})});
+    if(!r.data.ok)return showMessage(message,r.data.error||"Giriş başarısız.");
+    token=r.data.token;localStorage.setItem("2071_token",token);showLoggedIn(r.data.user);await loadCapsules();
+    closeAuth();
+  }catch(e){showMessage(message,"Sunucuya bağlanılamadı: "+e.message)}
 }
-
-
-/* =====================================================
-   GİRİŞ SONRASI
-===================================================== */
 
 function showLoggedIn(user){
-
-  $("registerCard")
-    ?.classList
-    .add("hidden");
-
-  $("loginCard")
-    ?.classList
-    .add("hidden");
-
-  $("passwordCard")
-    ?.classList
-    .add("hidden");
-
-  $("accountCard")
-    ?.classList
-    .remove("hidden");
-
-  $("testCard")
-    ?.classList
-    .remove("hidden");
-
-  $("realCard")
-    ?.classList
-    .remove("hidden");
-
-  $("capsulesCard")
-    ?.classList
-    .remove("hidden");
-
-
-  if($("welcome")){
-
-    $("welcome").textContent =
-      "Hoş geldiniz, " +
-      (user?.name || "");
-
-  }
-
-
-  if($("accountInfo")){
-
-    $("accountInfo").textContent =
-      (user?.email || "") +
-      " • " +
-      (
-        user?.test_available
-          ? "Test hakkınız mevcut."
-          : "Test hakkınız kullanıldı."
-      );
-
-  }
-
-
-  const testButton =
-    $("testButton");
-
-
-  if(testButton){
-
-    testButton.disabled =
-      !user?.test_available;
-
-  }
-
+  $("registerCard").classList.add("hidden");$("loginCard").classList.add("hidden");
+  $("drawerAccountCard").classList.remove("hidden");
+  $("accountCard").classList.remove("hidden");$("testCard").classList.remove("hidden");$("realCard").classList.remove("hidden");$("capsulesCard").classList.remove("hidden");
+  const text="Hoş geldiniz, "+(user?.name||"");
+  $("welcome").textContent=text;$("drawerWelcome").textContent=text;
+  const info=(user?.email||"")+" • "+(user?.test_available?"Test hakkınız mevcut.":"Test hakkınız kullanıldı.");
+  $("accountInfo").textContent=info;$("drawerAccountInfo").textContent=info;
+  $("testButton").disabled=!user?.test_available;
 }
-
-
-/* =====================================================
-   TEST KAPSÜLÜ
-===================================================== */
 
 async function createTestCapsule(){
-
-  if(!token){
-
-    goRegister();
-
-    return;
-
-  }
-
-
-  const message =
-    $("testMessage");
-
-
-  message.innerHTML =
-    "Test kapsülü oluşturuluyor...";
-
-
+  if(!token)return goRegister();
+  const message=$("testMessage");message.textContent="Test kapsülü oluşturuluyor...";
   try{
-
-    const result =
-      await api(
-        "/api/capsules",
-        {
-
-          method:"POST",
-
-          body:
-            JSON.stringify({
-
-              title:
-                "2071 Mektup - Test Kapsülü",
-
-              description:
-                "Ücretsiz test kapsülü",
-
-              mode:"test"
-
-            })
-
-        }
-      );
-
-
-    if(!result.data.ok){
-
-      showMessage(
-        message,
-        result.data.error ||
-        "Test kapsülü oluşturulamadı."
-      );
-
-      return;
-
-    }
-
-
-    currentCapsuleId =
-      result.data.capsule.id;
-
-
-    localStorage.setItem(
-      "2071_capsule_id",
-      currentCapsuleId
-    );
-
-
-    showMessage(
-      message,
-      "Test kapsülü oluşturuldu. Artık içerik ekleyebilirsiniz."
-    );
-
-
-    $("entryCard")
-      ?.classList
-      .remove("hidden");
-
-
-    await loadCapsules();
-
-
-  }catch(err){
-
-    showMessage(
-      message,
-      "Sunucu hatası: " +
-      err.message
-    );
-
-  }
-
+    const r=await api("/api/capsules",{method:"POST",body:JSON.stringify({title:"2071 Mektup - Test Kapsülü",description:"Ücretsiz test kapsülü",mode:"test"})});
+    if(!r.data.ok)return showMessage(message,r.data.error||"Test kapsülü oluşturulamadı.");
+    currentCapsuleId=r.data.capsule.id;localStorage.setItem("2071_capsule_id",currentCapsuleId);
+    showMessage(message,"Test kapsülü oluşturuldu. Artık içerik ekleyebilirsiniz.");
+    $("entryCard").classList.remove("hidden");await loadCapsules();
+  }catch(e){showMessage(message,"Sunucu hatası: "+e.message)}
 }
-
-
-/* =====================================================
-   GERÇEK KAPSÜL
-===================================================== */
 
 async function createRealCapsule(){
-
-  if(!token){
-
-    goRegister();
-
-    return;
-
-  }
-
-
-  const title =
-    $("capsuleTitle")
-      ?.value
-      .trim();
-
-  const description =
-    $("capsuleDescription")
-      ?.value
-      .trim();
-
-  const message =
-    $("realMessage");
-
-
-  if(!title){
-
-    showMessage(
-      message,
-      "Kapsül başlığı gerekli."
-    );
-
-    return;
-
-  }
-
-
-  message.innerHTML =
-    "Gerçek kapsül oluşturuluyor...";
-
-
+  if(!token)return goRegister();
+  const title=$("capsuleTitle").value.trim(),description=$("capsuleDescription").value.trim(),message=$("realMessage");
+  if(!title)return showMessage(message,"Kapsül başlığı gerekli.");
+  message.textContent="Gerçek kapsül oluşturuluyor...";
   try{
-
-    const result =
-      await api(
-        "/api/capsules",
-        {
-
-          method:"POST",
-
-          body:
-            JSON.stringify({
-
-              title,
-              description,
-              mode:"real"
-
-            })
-
-        }
-      );
-
-
-    if(!result.data.ok){
-
-      showMessage(
-        message,
-        result.data.error ||
-        "Kapsül oluşturulamadı."
-      );
-
-      return;
-
-    }
-
-
-    currentCapsuleId =
-      result.data.capsule.id;
-
-
-    localStorage.setItem(
-      "2071_capsule_id",
-      currentCapsuleId
-    );
-
-
-    showMessage(
-      message,
-      "Gerçek kapsül oluşturuldu."
-    );
-
-
-    $("entryCard")
-      ?.classList
-      .remove("hidden");
-
-
-    $("lockCard")
-      ?.classList
-      .remove("hidden");
-
-
-    await loadCapsules();
-
-
-  }catch(err){
-
-    showMessage(
-      message,
-      "Sunucu hatası: " +
-      err.message
-    );
-
-  }
-
+    const r=await api("/api/capsules",{method:"POST",body:JSON.stringify({title,description,mode:"real"})});
+    if(!r.data.ok)return showMessage(message,r.data.error||"Kapsül oluşturulamadı.");
+    currentCapsuleId=r.data.capsule.id;localStorage.setItem("2071_capsule_id",currentCapsuleId);
+    showMessage(message,"Gerçek kapsül oluşturuldu.");$("entryCard").classList.remove("hidden");$("lockCard").classList.remove("hidden");await loadCapsules();
+  }catch(e){showMessage(message,"Sunucu hatası: "+e.message)}
 }
-
-
-/* =====================================================
-   İÇERİK EKLE
-===================================================== */
 
 async function addEntry(){
-
-  if(!token){
-
-    goRegister();
-
-    return;
-
-  }
-
-
-  if(!currentCapsuleId){
-
-    alert(
-      "Önce bir kapsül oluşturun."
-    );
-
-    return;
-
-  }
-
-
-  const type =
-    $("entryType").value;
-
-  const title =
-    $("entryTitle")
-      .value
-      .trim();
-
-  const content =
-    $("entryContent")
-      .value;
-
-  const message =
-    $("entryMessage");
-
-
-  if(!content.trim()){
-
-    showMessage(
-      message,
-      "İçerik boş bırakılamaz."
-    );
-
-    return;
-
-  }
-
-
-  message.innerHTML =
-    "İçerik ekleniyor...";
-
-
+  if(!token)return goRegister();if(!currentCapsuleId)return alert("Önce bir kapsül oluşturun.");
+  const type=$("entryType").value,title=$("entryTitle").value.trim(),content=$("entryContent").value,message=$("entryMessage");
+  if(!content.trim())return showMessage(message,"İçerik boş bırakılamaz.");
+  message.textContent="İçerik ekleniyor...";
   try{
-
-    const result =
-      await api(
-
-        "/api/capsules/" +
-        encodeURIComponent(
-          currentCapsuleId
-        ) +
-        "/entries",
-
-        {
-
-          method:"POST",
-
-          body:
-            JSON.stringify({
-
-              type,
-              title,
-              content,
-
-              year:
-                new Date()
-                  .getFullYear()
-
-            })
-
-        }
-
-      );
-
-
-    if(!result.data.ok){
-
-      showMessage(
-        message,
-        result.data.error ||
-        "İçerik eklenemedi."
-      );
-
-      return;
-
-    }
-
-
-    showMessage(
-      message,
-      "İçerik kapsüle eklendi."
-    );
-
-
-    $("entryTitle").value =
-      "";
-
-    $("entryContent").value =
-      "";
-
-
-    await loadCapsules();
-
-
-  }catch(err){
-
-    showMessage(
-      message,
-      "Sunucu hatası: " +
-      err.message
-    );
-
-  }
-
+    const r=await api("/api/capsules/"+encodeURIComponent(currentCapsuleId)+"/entries",{method:"POST",body:JSON.stringify({type,title,content,year:new Date().getFullYear()})});
+    if(!r.data.ok)return showMessage(message,r.data.error||"İçerik eklenemedi.");
+    showMessage(message,"İçerik kapsüle eklendi.");$("entryTitle").value="";$("entryContent").value="";await loadCapsules();
+  }catch(e){showMessage(message,"Sunucu hatası: "+e.message)}
 }
-
-
-/* =====================================================
-   KİLİTLE
-===================================================== */
 
 async function lockCapsule(){
-
-  if(!token){
-
-    goRegister();
-
-    return;
-
-  }
-
-
-  if(!currentCapsuleId){
-
-    alert(
-      "Önce bir kapsül oluşturun."
-    );
-
-    return;
-
-  }
-
-
-  const unlockDate =
-    $("unlockDate")
-      ?.value;
-
-  const message =
-    $("lockMessage");
-
-
-  if(!unlockDate){
-
-    showMessage(
-      message,
-      "Açılış tarihi seçin."
-    );
-
-    return;
-
-  }
-
-
-  const date =
-    new Date(
-      unlockDate
-    );
-
-
-  if(
-    Number.isNaN(
-      date.getTime()
-    )
-  ){
-
-    showMessage(
-      message,
-      "Geçersiz tarih."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    date.getTime() <=
-    Date.now()
-  ){
-
-    showMessage(
-      message,
-      "Açılış tarihi gelecekte olmalıdır."
-    );
-
-    return;
-
-  }
-
-
-  const confirmed =
-    confirm(
-
-      "DİKKAT!\n\n" +
-
-      "Kapsül kalıcı olarak mühürlenecek.\n\n" +
-
-      "Açılış tarihi değiştirilemeyecek.\n" +
-
-      "Yeni içerik eklenemeyecek.\n\n" +
-
-      "Devam etmek istiyor musunuz?"
-
-    );
-
-
-  if(!confirmed){
-
-    return;
-
-  }
-
-
-  message.innerHTML =
-    "Kapsül mühürleniyor...";
-
-
+  if(!token)return goRegister();if(!currentCapsuleId)return alert("Önce bir kapsül oluşturun.");
+  const unlockDate=$("unlockDate").value,message=$("lockMessage");
+  if(!unlockDate)return showMessage(message,"Açılış tarihi seçin.");
+  const date=new Date(unlockDate);
+  if(Number.isNaN(date.getTime()))return showMessage(message,"Geçersiz tarih.");
+  if(date.getTime()<=Date.now())return showMessage(message,"Açılış tarihi gelecekte olmalıdır.");
+  if(!confirm("DİKKAT!\n\nKapsül kalıcı olarak mühürlenecek.\n\nAçılış tarihi değiştirilemeyecek.\nYeni içerik eklenemeyecek.\n\nDevam etmek istiyor musunuz?"))return;
+  message.textContent="Kapsül mühürleniyor...";
   try{
-
-    const result =
-      await api(
-
-        "/api/capsules/" +
-        encodeURIComponent(
-          currentCapsuleId
-        ) +
-        "/lock",
-
-        {
-
-          method:"POST",
-
-          body:
-            JSON.stringify({
-
-              unlock_at:
-                date.toISOString()
-
-            })
-
-        }
-
-      );
-
-
-    if(!result.data.ok){
-
-      showMessage(
-        message,
-        result.data.error ||
-        "Kapsül mühürlenemedi."
-      );
-
-      return;
-
-    }
-
-
-    showMessage(
-
-      message,
-
-      "🔒 Kapsül kalıcı olarak mühürlendi.\n" +
-
-      "Açılış tarihi: " +
-
-      result.data.capsule.unlock_at
-
-    );
-
-
-    $("entryCard")
-      ?.classList
-      .add("hidden");
-
-
-    $("lockCard")
-      ?.classList
-      .add("hidden");
-
-
-    await loadCapsules();
-
-
-  }catch(err){
-
-    showMessage(
-      message,
-      "Sunucu hatası: " +
-      err.message
-    );
-
-  }
-
+    const r=await api("/api/capsules/"+encodeURIComponent(currentCapsuleId)+"/lock",{method:"POST",body:JSON.stringify({unlock_at:date.toISOString()})});
+    if(!r.data.ok)return showMessage(message,r.data.error||"Kapsül mühürlenemedi.");
+    showMessage(message,"🔒 Kapsül kalıcı olarak mühürlendi.\nAçılış tarihi: "+r.data.capsule.unlock_at);
+    $("entryCard").classList.add("hidden");$("lockCard").classList.add("hidden");await loadCapsules();
+  }catch(e){showMessage(message,"Sunucu hatası: "+e.message)}
 }
-
-
-/* =====================================================
-   KAPSÜLLER
-===================================================== */
 
 async function loadCapsules(){
-
-  if(!token){
-    return;
-  }
-
-
+  if(!token)return;
   try{
-
-    const result =
-      await api(
-        "/api/capsules",
-        {
-          method:"GET"
-        }
-      );
-
-
-    if(!result.data.ok){
-      return;
-    }
-
-
-    const list =
-      $("capsuleList");
-
-
-    if(!list){
-      return;
-    }
-
-
-    const capsules =
-      result.data.capsules || [];
-
-
-    if(!capsules.length){
-
-      list.innerHTML =
-        "Henüz kapsül bulunmuyor.";
-
-      return;
-
-    }
-
-
-    list.innerHTML =
-      capsules
-        .map(c => {
-
-          const locked =
-            c.status === "LOCKED";
-
-          const open =
-            c.status === "OPEN";
-
-
-          return `
-
-          <div class="capsule">
-
-            <b>
-              ${
-                c.mode === "test"
-                  ? "🧪 TEST"
-                  : "🔐 GERÇEK"
-              }
-            </b>
-
-            <h3>
-              ${escapeHtml(c.title)}
-            </h3>
-
-            <p>
-              Durum:
-              <b>
-                ${escapeHtml(c.status)}
-              </b>
-            </p>
-
-            <p>
-              Açılış:
-              ${
-                c.unlock_at
-                  ? escapeHtml(c.unlock_at)
-                  : "Belirlenmedi"
-              }
-            </p>
-
-            ${
-              locked
-                ? "<p>🔒 Kalıcı olarak mühürlü.</p>"
-                : ""
-            }
-
-            ${
-              open
-                ? "<p>🔓 Kapsül açık.</p>"
-                : ""
-            }
-
-          </div>
-
-          `;
-
-        })
-        .join("");
-
-
-  }catch(err){
-
-    console.error(
-      "Kapsüller yüklenemedi:",
-      err
-    );
-
-  }
-
+    const r=await api("/api/capsules");if(!r.data.ok)return;
+    const list=$("capsuleList"),capsules=r.data.capsules||[];
+    if(!capsules.length){list.innerHTML="Henüz kapsül bulunmuyor.";return}
+    list.innerHTML=capsules.map(c=>{
+      const locked=c.status==="LOCKED",open=c.status==="OPEN";
+      return `<div class="capsule"><b>${c.mode==="test"?"🧪 TEST":"🔐 GERÇEK"}</b><h3>${escapeHtml(c.title)}</h3>
+      <p>Durum: <b>${escapeHtml(c.status)}</b></p><p>Açılış: ${c.unlock_at?escapeHtml(c.unlock_at):"Belirlenmedi"}</p>
+      ${locked?"<p>🔒 Kalıcı olarak mühürlü.</p>":""}${open?"<p>🔓 Kapsül açık.</p>":""}</div>`;
+    }).join("");
+  }catch(e){console.error("Kapsüller yüklenemedi:",e)}
 }
-
-
-/* =====================================================
-   ÇIKIŞ
-===================================================== */
 
 function logout(){
-
-  localStorage.removeItem(
-    "2071_token"
-  );
-
-  localStorage.removeItem(
-    "2071_capsule_id"
-  );
-
-
-  token = null;
-
-  currentCapsuleId = null;
-
-
-  location.reload();
-
+  localStorage.removeItem("2071_token");localStorage.removeItem("2071_capsule_id");token=null;currentCapsuleId=null;location.reload();
 }
-
-
-/* =====================================================
-   26 AĞUSTOS 2071 GERİ SAYIM
-===================================================== */
 
 function tick(){
-
-  /*
-    Türkiye saati:
-    26 Ağustos 2071 00:00
-  */
-
-  const target =
-    new Date(
-      "2071-08-26T00:00:00+03:00"
-    );
-
-
-  const difference =
-    target.getTime() -
-    Date.now();
-
-
-  const count =
-    $("count");
-
-
-  if(!count){
-    return;
-  }
-
-
-  if(difference <= 0){
-
-    count.textContent =
-      "DOSYALAR AÇILDI";
-
-    return;
-
-  }
-
-
-  const days =
-    Math.floor(
-      difference /
-      86400000
-    );
-
-
-  count.textContent =
-    days.toLocaleString(
-      "tr-TR"
-    ) +
-    " gün";
-
+  const target=new Date("2071-08-26T00:00:00+03:00"),difference=target.getTime()-Date.now(),count=$("count");
+  if(difference<=0){count.textContent="DOSYALAR AÇILDI";return}
+  count.textContent=Math.floor(difference/86400000).toLocaleString("tr-TR")+" gün";
 }
-
-
-setInterval(
-  tick,
-  1000
-);
-
-tick();
-
-
-/* =====================================================
-   GENEL İSTATİSTİKLER
-===================================================== */
+setInterval(tick,1000);tick();
 
 async function loadPublicStats(){
-
   try{
-
-    const response =
-      await fetch(
-        API + "/api/stats"
-      );
-
-
-    if(!response.ok){
-      return;
-    }
-
-
-    const data =
-      await response.json();
-
-
-    if(
-      !data ||
-      !data.ok
-    ){
-      return;
-    }
-
-
-    if($("statLetters")){
-
-      $("statLetters")
-        .textContent =
-        Number(
-          data.letters || 0
-        ).toLocaleString(
-          "tr-TR"
-        );
-
-    }
-
-
-    if($("statFiles")){
-
-      $("statFiles")
-        .textContent =
-        Number(
-          data.files || 0
-        ).toLocaleString(
-          "tr-TR"
-        );
-
-    }
-
-
-    if($("statUsers")){
-
-      $("statUsers")
-        .textContent =
-        Number(
-          data.users || 0
-        ).toLocaleString(
-          "tr-TR"
-        );
-
-    }
-
-
-    if($("statFeedback")){
-
-      $("statFeedback")
-        .textContent =
-        Number(
-          data.feedback ||
-          data.comments ||
-          0
-        ).toLocaleString(
-          "tr-TR"
-        );
-
-    }
-
-
-  }catch(err){
-
-    console.log(
-      "İstatistikler şu anda kullanılamıyor."
-    );
-
-  }
-
+    const r=await fetch(API+"/api/stats");if(!r.ok)return;const d=await r.json();if(!d?.ok)return;
+    $("statLetters").textContent=Number(d.letters||0).toLocaleString("tr-TR");
+    $("statFiles").textContent=Number(d.files||0).toLocaleString("tr-TR");
+    $("statUsers").textContent=Number(d.users||0).toLocaleString("tr-TR");
+    $("statFeedback").textContent=Number(d.feedback||d.comments||0).toLocaleString("tr-TR");
+  }catch(e){}
 }
-
-
-/* =====================================================
-   FİKİR / YORUM GÖNDER
-===================================================== */
 
 async function sendFeedback(){
-
-  const name =
-    $("feedbackName")
-      ?.value
-      .trim();
-
-  const type =
-    $("feedbackType")
-      ?.value;
-
-  const content =
-    $("feedbackContent")
-      ?.value
-      .trim();
-
-  const message =
-    $("feedbackMessage");
-
-
-  if(!name){
-
-    showMessage(
-      message,
-      "Lütfen adınızı yazın."
-    );
-
-    return;
-
-  }
-
-
-  if(!content){
-
-    showMessage(
-      message,
-      "Lütfen mesajınızı yazın."
-    );
-
-    return;
-
-  }
-
-
-  message.innerHTML =
-    "Mesajınız gönderiliyor...";
-
-
+  const name=$("feedbackName").value.trim(),type=$("feedbackType").value,content=$("feedbackContent").value.trim(),message=$("feedbackMessage");
+  if(!name)return showMessage(message,"Lütfen adınızı yazın.");if(!content)return showMessage(message,"Lütfen mesajınızı yazın.");
+  message.textContent="Mesajınız gönderiliyor...";
   try{
-
-    /*
-      Backend'e hazır.
-      Endpoint mevcut değilse
-      kullanıcıya anlaşılır bilgi verir.
-    */
-
-    const result =
-      await api(
-        "/api/feedback",
-        {
-
-          method:"POST",
-
-          body:
-            JSON.stringify({
-
-              name,
-              type,
-              content
-
-            })
-
-        }
-      );
-
-
-    if(!result.data.ok){
-
-      showMessage(
-        message,
-        result.data.error ||
-        "Mesaj gönderilemedi."
-      );
-
-      return;
-
-    }
-
-
-    showMessage(
-      message,
-      "💬 Mesajınız başarıyla gönderildi. Teşekkür ederiz."
-    );
-
-
-    $("feedbackName").value =
-      "";
-
-    $("feedbackContent").value =
-      "";
-
-
-    loadPublicStats();
-
-
-  }catch(err){
-
-    showMessage(
-      message,
-
-      "Mesaj sistemi henüz sunucu tarafında "
-      +
-      "etkinleştirilmemiş olabilir."
-
-    );
-
-  }
-
+    const r=await api("/api/feedback",{method:"POST",body:JSON.stringify({name,type,content})});
+    if(!r.data.ok)return showMessage(message,r.data.error||"Mesaj gönderilemedi.");
+    showMessage(message,"💬 Mesajınız başarıyla gönderildi. Teşekkür ederiz.");$("feedbackName").value="";$("feedbackContent").value="";loadPublicStats();
+  }catch(e){showMessage(message,"Mesaj sistemi henüz sunucu tarafında etkinleştirilmemiş olabilir.")}
 }
-
-
-/* =====================================================
-   OTURUMU GERİ YÜKLE
-===================================================== */
 
 async function restoreSession(){
-
-  if(!token){
-    return;
-  }
-
-
+  if(!token)return;
   try{
-
-    const result =
-      await api(
-        "/api/me",
-        {
-          method:"GET"
-        }
-      );
-
-
-    if(!result.data.ok){
-
-      localStorage.removeItem(
-        "2071_token"
-      );
-
-      token = null;
-
-      return;
-
-    }
-
-
-    showLoggedIn(
-      result.data.user
-    );
-
-
-    await loadCapsules();
-
-
-    if(currentCapsuleId){
-
-      $("entryCard")
-        ?.classList
-        .remove("hidden");
-
-    }
-
-
-  }catch(err){
-
-    console.log(
-      "Oturum kontrolü yapılamadı.",
-      err
-    );
-
-  }
-
+    const r=await api("/api/me");if(!r.data.ok){localStorage.removeItem("2071_token");token=null;return}
+    showLoggedIn(r.data.user);await loadCapsules();
+    if(currentCapsuleId)$("entryCard").classList.remove("hidden");
+  }catch(e){}
 }
 
+loadPublicStats();restoreSession();
 
-/* =====================================================
-   BAŞLAT
-===================================================== */
-
-loadPublicStats();
-
-restoreSession();
-
-
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
-
-if(
-  "serviceWorker" in navigator
-){
-
-  window.addEventListener(
-    "load",
-    () => {
-
-      navigator.serviceWorker
-        .register(
-          "/service-worker.js"
-        )
-        .catch(
-          err =>
-            console.log(
-              "Service Worker:",
-              err
-            )
-        );
-
-    }
-  );
-
-}
-
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeAuth()});
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/service-worker.js").catch(e=>console.log("Service Worker:",e)));
 </script>
-
 </body>
 </html>
