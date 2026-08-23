@@ -2154,7 +2154,16 @@ export default {
         );
       }
 
+/* ============================
+   WEB SAYFASI
+   ============================ */
 
+if (
+  env.ASSETS &&
+  !u.pathname.startsWith("/api/")
+) {
+  return env.ASSETS.fetch(request);
+}
       return error(
         "Endpoint bulunamadı",
         404
