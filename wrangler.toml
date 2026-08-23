@@ -1,6 +1,10 @@
 name = "2071-mektup"
 main = "worker.js"
-compatibility_date = "2026-08-22"
+compatibility_date = "2026-08-23"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
 
 [[d1_databases]]
 binding = "DB"
