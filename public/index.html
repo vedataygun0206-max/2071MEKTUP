@@ -285,12 +285,13 @@ saklamanız önerilir.
 </div>
 
 <div
-  document
-  .getElementById(
-    "generatedPassword"
-  )
-  .textContent =
+  const passwordBox =
+  document.getElementById("generatedPassword");
+
+if (passwordBox) {
+  passwordBox.textContent =
     result.data.credentials.password;
+}
 ></div>
 
 </section>
