@@ -16,7 +16,7 @@
 
 <meta
   name="theme-color"
-  content="#08111f"
+  content="#07111f"
 >
 
 <meta
@@ -25,7 +25,6 @@
 >
 
 <title>2071 Mektup | Geleceğe Bırak</title>
-
 
 <style>
 
@@ -45,10 +44,10 @@ body{
   margin:0;
   background:
     radial-gradient(
-      circle at top,
-      #12233c 0,
+      circle at 50% -10%,
+      #193452 0,
       #07111f 45%,
-      #040a12 100%
+      #03070d 100%
     );
   color:#eef4ff;
   font-family:
@@ -73,50 +72,51 @@ button{
 
 
 /* =====================================================
-   ANA ALAN
+   ANA
 ===================================================== */
 
 .wrap{
   width:100%;
-  max-width:1000px;
+  max-width:920px;
   margin:auto;
-  padding:0 18px 60px;
+  padding:0 16px 50px;
 }
 
 
 /* =====================================================
-   ÜST MENÜ
+   MENÜ
 ===================================================== */
 
 .nav{
+  height:64px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:18px 0;
+  justify-content:space-between;
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .nav-logo{
-  font-size:20px;
-  font-weight:900;
-  letter-spacing:.5px;
+  font-size:19px;
+  font-weight:950;
+  letter-spacing:.4px;
 }
 
 .nav-logo span{
   color:#e7c76a;
 }
 
-.nav-links{
+.nav-menu{
   display:flex;
-  gap:8px;
+  gap:7px;
 }
 
-.nav-links button{
-  background:transparent;
-  border:1px solid #263b56;
-  color:#d9e7fa;
-  padding:8px 12px;
-  border-radius:10px;
+.nav-menu button{
+  background:#0c1a2b;
+  color:#cbd9ea;
+  border:1px solid #263b55;
+  border-radius:9px;
+  padding:7px 11px;
+  font-size:12px;
 }
 
 
@@ -126,25 +126,34 @@ button{
 
 .hero{
   text-align:center;
-  padding:55px 10px 35px;
+  padding:48px 8px 25px;
 }
 
 .eyebrow{
   display:inline-block;
-  color:#e7c76a;
-  background:rgba(231,199,106,.09);
-  border:1px solid rgba(231,199,106,.25);
+  padding:6px 12px;
   border-radius:30px;
-  padding:7px 13px;
-  font-size:12px;
-  font-weight:800;
+
+  background:
+    rgba(231,199,106,.08);
+
+  border:
+    1px solid
+    rgba(231,199,106,.25);
+
+  color:#e7c76a;
+
+  font-size:11px;
+  font-weight:900;
   letter-spacing:1px;
 }
 
 .logo{
-  margin:18px 0 5px;
+  margin:17px 0 6px;
+
   font-size:
-    clamp(42px,10vw,78px);
+    clamp(42px,10vw,72px);
+
   line-height:1;
   font-weight:950;
   letter-spacing:-3px;
@@ -155,237 +164,299 @@ button{
 }
 
 .tag{
-  max-width:650px;
+  max-width:620px;
   margin:15px auto 0;
+
   color:#a9bdd7;
-  font-size:18px;
+  font-size:17px;
 }
 
 .hero-buttons{
-  margin-top:25px;
+  margin-top:24px;
+}
+
+.primary,
+.secondary,
+.danger{
+  border-radius:11px;
+  padding:12px 17px;
+  border:0;
+  font-weight:850;
 }
 
 .primary{
   background:#e7c76a;
   color:#111;
-  border:0;
 }
 
 .secondary{
-  background:#152840;
+  background:#142840;
   color:#fff;
-  border:1px solid #2a4564;
+  border:1px solid #2b4665;
 }
 
-.hero-buttons button{
-  padding:13px 19px;
-  border-radius:12px;
-  margin:4px;
-  font-weight:800;
+.danger{
+  background:#7c2630;
+  color:#fff;
 }
 
 
 /* =====================================================
-   GERİ SAYIM
+   TARİH KUTUSU
 ===================================================== */
 
-.count-box{
-  margin:30px auto 0;
-  max-width:600px;
+.date-box{
+  max-width:650px;
+  margin:28px auto 0;
+
+  padding:20px;
+
   background:
     linear-gradient(
       135deg,
-      rgba(231,199,106,.12),
-      rgba(20,43,70,.5)
+      rgba(231,199,106,.11),
+      rgba(12,31,51,.75)
     );
-  border:1px solid rgba(231,199,106,.22);
-  border-radius:22px;
-  padding:22px;
+
+  border:
+    1px solid
+    rgba(231,199,106,.23);
+
+  border-radius:21px;
 }
 
-.count-label{
+.date-title{
+  color:#e7c76a;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.4px;
+}
+
+.date-subtitle{
+  margin-top:5px;
   color:#91a8c3;
-  font-size:13px;
-  text-transform:uppercase;
-  letter-spacing:1px;
+  font-size:12px;
 }
 
 .count{
+  margin-top:8px;
+
+  color:#f5da83;
+
   font-size:
-    clamp(35px,8vw,60px);
+    clamp(32px,8vw,55px);
+
   font-weight:950;
-  color:#f4d87e;
-  line-height:1.1;
-  margin-top:7px;
+  line-height:1;
 }
 
 
 /* =====================================================
-   İSTATİSTİKLER
+   ANLAM KUTUSU
+===================================================== */
+
+.meaning{
+  max-width:650px;
+  margin:15px auto 0;
+
+  padding:14px 16px;
+
+  background:#0b192a;
+  border:1px solid #20364f;
+  border-radius:14px;
+
+  color:#b8c9dc;
+  font-size:13px;
+}
+
+.meaning strong{
+  color:#e7c76a;
+}
+
+
+/* =====================================================
+   İSTATİSTİK
 ===================================================== */
 
 .stats{
   display:grid;
   grid-template-columns:
-    repeat(3,1fr);
-  gap:10px;
-  margin:20px 0;
+    repeat(4,1fr);
+
+  gap:9px;
+
+  margin:22px 0;
 }
 
 .stat{
-  background:#0d1a2b;
-  border:1px solid #20354f;
-  border-radius:16px;
-  padding:18px 10px;
+  background:#0b192a;
+  border:1px solid #1e344d;
+  border-radius:15px;
+  padding:15px 7px;
   text-align:center;
 }
 
 .stat-number{
-  font-size:27px;
-  font-weight:900;
   color:#e7c76a;
+  font-size:25px;
+  font-weight:950;
 }
 
 .stat-label{
-  color:#91a8c3;
-  font-size:12px;
+  color:#849bb5;
+  font-size:10px;
+  line-height:1.3;
 }
 
 
 /* =====================================================
-   BÖLÜMLER
+   BÖLÜM
 ===================================================== */
 
 .section{
-  margin-top:35px;
+  margin-top:30px;
 }
 
 .section-title{
-  font-size:27px;
-  margin-bottom:6px;
+  margin:7px 0 4px;
+  font-size:25px;
+  line-height:1.2;
 }
 
 .section-subtitle{
-  color:#91a8c3;
   margin-top:0;
+  color:#91a8c3;
+  font-size:14px;
 }
 
 
 /* =====================================================
-   KARTLAR
+   KART
 ===================================================== */
 
 .card{
   background:
     linear-gradient(
       145deg,
-      rgba(16,31,51,.96),
-      rgba(8,20,34,.96)
+      rgba(14,29,48,.96),
+      rgba(7,18,31,.97)
     );
+
   border:1px solid #20354f;
-  border-radius:20px;
-  padding:22px;
-  margin:14px 0;
+  border-radius:18px;
+
+  padding:20px;
+  margin:12px 0;
 }
 
 .badge{
   display:inline-block;
-  background:#19395c;
+
+  background:#173554;
+
   color:#dcecff;
-  padding:5px 10px;
+
+  padding:5px 9px;
+
   border-radius:20px;
-  font-size:11px;
-  font-weight:800;
+
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.2px;
 }
 
 
 /* =====================================================
-   TARİHİ ÖRNEKLER
+   PROJE MANİFESTOSU
 ===================================================== */
 
-.examples{
+.manifesto{
+  text-align:center;
+  padding:27px 20px;
+}
+
+.manifesto h2{
+  font-size:27px;
+  margin:10px 0;
+}
+
+.manifesto p{
+  max-width:650px;
+  margin:9px auto;
+  color:#a9bdd7;
+}
+
+
+/* =====================================================
+   TARİH
+===================================================== */
+
+.timeline{
   display:grid;
   grid-template-columns:
-    repeat(2,1fr);
-  gap:14px;
+    repeat(3,1fr);
+
+  gap:10px;
 }
 
-.example{
-  background:#0b1727;
-  border:1px solid #20354f;
-  border-radius:18px;
-  padding:20px;
-  position:relative;
+.timeline-item{
+  padding:17px;
+
+  background:#091726;
+
+  border:1px solid #20354e;
+  border-radius:15px;
 }
 
-.example-year{
+.timeline-year{
   color:#e7c76a;
-  font-size:13px;
-  font-weight:900;
-}
-
-.example h3{
-  margin:7px 0;
-}
-
-.example p{
-  color:#a9bdd7;
-  font-size:14px;
-}
-
-.example-footer{
-  margin-top:15px;
-  color:#6f89a7;
   font-size:12px;
-}
-
-
-/* =====================================================
-   FİKİR
-===================================================== */
-
-.idea{
-  text-align:center;
-  padding:35px 20px;
-}
-
-.idea-title{
-  font-size:30px;
   font-weight:900;
 }
 
-.idea p{
-  color:#a9bdd7;
-  max-width:700px;
-  margin:10px auto;
+.timeline h3{
+  margin:7px 0;
+  font-size:16px;
+}
+
+.timeline p{
+  margin:0;
+  color:#8fa6bf;
+  font-size:13px;
 }
 
 
 /* =====================================================
-   GİRİŞ / KAYIT
+   GİRİŞ KAYIT
 ===================================================== */
 
 .auth-grid{
   display:grid;
   grid-template-columns:
     repeat(2,1fr);
-  gap:15px;
-}
 
-.auth-card h2{
-  margin-top:10px;
+  gap:12px;
 }
 
 input,
 textarea,
 select{
   width:100%;
-  padding:13px;
-  margin:6px 0;
-  background:#081523;
+
+  padding:12px;
+
+  margin:5px 0;
+
+  background:#071321;
+
   color:#fff;
-  border:1px solid #2c4562;
-  border-radius:11px;
+
+  border:
+    1px solid
+    #2a4562;
+
+  border-radius:10px;
+
   outline:none;
 }
 
@@ -397,67 +468,119 @@ select:focus{
 
 .auth-card button,
 .action-button{
-  padding:12px 17px;
-  border:0;
-  border-radius:11px;
   margin-top:7px;
-  font-weight:800;
 }
 
 .message{
-  padding:12px;
-  border-radius:11px;
-  margin-top:10px;
+  padding:11px;
+
+  margin-top:9px;
+
   background:#10253d;
+
+  border-radius:10px;
+
+  font-size:13px;
+
   white-space:pre-wrap;
-  font-size:14px;
-}
-
-.warning{
-  background:#3b2d0d;
-  border:1px solid #756022;
-  padding:15px;
-  border-radius:12px;
-  line-height:1.5;
-}
-
-.password{
-  background:#182c16;
-  border:1px solid #527348;
-  padding:15px;
-  border-radius:12px;
-  margin-top:12px;
-  word-break:break-all;
-  color:#dff4d7;
-  font-weight:800;
 }
 
 .small{
-  color:#91a8c3;
+  color:#8fa6bf;
+  font-size:12px;
+}
+
+
+/* =====================================================
+   ŞİFRE
+===================================================== */
+
+.warning{
+  background:#3a2d0e;
+  border:1px solid #705d22;
+
+  padding:14px;
+
+  border-radius:11px;
+
+  color:#eadfbf;
+
+  font-size:13px;
+}
+
+.password{
+  margin-top:12px;
+
+  padding:14px;
+
+  background:#152915;
+
+  border:1px solid #4c7145;
+
+  border-radius:11px;
+
+  color:#dcf4d7;
+
+  font-weight:900;
+
+  word-break:break-all;
+}
+
+
+/* =====================================================
+   KAPSÜL
+===================================================== */
+
+.capsule{
+  margin:9px 0;
+
+  padding:15px;
+
+  background:#081625;
+
+  border:
+    1px solid
+    #29415d;
+
+  border-radius:13px;
+}
+
+.capsule h3{
+  margin:7px 0;
+}
+
+.capsule p{
+  color:#8fa6bf;
   font-size:13px;
 }
 
 
 /* =====================================================
-   HESAP / KAPSÜL
+   FİKİR / YORUM
 ===================================================== */
 
-.capsule{
-  border:1px solid #29405f;
-  border-radius:14px;
-  padding:15px;
-  margin:10px 0;
-  background:#091727;
+.feedback-grid{
+  display:grid;
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:12px;
 }
 
-.hidden{
-  display:none !important;
+.feedback-card{
+  background:#091726;
+  border:1px solid #20364f;
+  border-radius:15px;
+  padding:17px;
 }
 
-.danger{
-  background:#7c2630;
-  color:#fff;
-  border:0;
+.feedback-card h3{
+  margin:8px 0 5px;
+}
+
+.feedback-card p{
+  color:#91a8c3;
+  font-size:13px;
 }
 
 
@@ -466,12 +589,23 @@ select:focus{
 ===================================================== */
 
 footer{
+  margin-top:45px;
+
+  padding:23px 10px;
+
   text-align:center;
-  margin-top:50px;
-  padding:25px 10px;
-  border-top:1px solid rgba(255,255,255,.08);
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.08);
+
   color:#7188a4;
-  font-size:13px;
+
+  font-size:12px;
+}
+
+.hidden{
+  display:none !important;
 }
 
 
@@ -481,20 +615,22 @@ footer{
 
 @media(max-width:700px){
 
-  .nav-links{
+  .nav-menu{
     display:none;
   }
 
   .hero{
-    padding-top:38px;
-  }
-
-  .examples,
-  .auth-grid{
-    grid-template-columns:1fr;
+    padding-top:35px;
   }
 
   .stats{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .auth-grid,
+  .feedback-grid,
+  .timeline{
     grid-template-columns:1fr;
   }
 
@@ -508,9 +644,7 @@ footer{
 
 </head>
 
-
 <body>
-
 
 <div class="wrap">
 
@@ -525,18 +659,18 @@ footer{
     2071 <span>MEKTUP</span>
   </div>
 
-  <div class="nav-links">
+  <div class="nav-menu">
 
     <button onclick="scrollToId('about')">
       Hakkında
     </button>
 
-    <button onclick="scrollToId('examples')">
-      Örnekler
+    <button onclick="scrollToId('auth')">
+      Giriş
     </button>
 
-    <button onclick="scrollToId('auth')">
-      Kayıt / Giriş
+    <button onclick="scrollToId('feedback')">
+      Fikir
     </button>
 
   </div>
@@ -561,7 +695,7 @@ footer{
   <div class="tag">
     Bugünü mühürle, geleceğe bırak.
     Bir mektup, bir fotoğraf, bir ses...
-    Belki de 2071'de birileri sizin hikâyenizi okuyacak.
+    2071'de birileri bugünümüzü okuyacak.
   </div>
 
 
@@ -576,18 +710,26 @@ footer{
 
     <button
       class="secondary"
-      onclick="scrollToId('examples')"
+      onclick="scrollToId('about')"
     >
-      📜 Eski Mektupları Gör
+      2071 Mektup Nedir?
     </button>
 
   </div>
 
 
-  <div class="count-box">
+  <!-- ===================================================
+       26 AĞUSTOS
+  ==================================================== -->
 
-    <div class="count-label">
-      22 Ağustos 2071'e kalan süre
+  <div class="date-box">
+
+    <div class="date-title">
+      🇹🇷 26 AĞUSTOS 2071
+    </div>
+
+    <div class="date-subtitle">
+      Geleceğe bırakılan dosyaların açılacağı tarih
     </div>
 
     <div
@@ -599,11 +741,26 @@ footer{
 
   </div>
 
+
+  <div class="meaning">
+
+    <strong>26 Ağustos neden?</strong>
+
+    <br>
+
+    26 Ağustos 1071'de başlayan
+    Malazgirt Zaferi'nin hatırasına;
+    2071'de açılacak bu dijital arşiv,
+    bugünün insanından geleceğin insanına
+    bırakılmış bir hatıra olsun.
+
+  </div>
+
 </section>
 
 
 <!-- =====================================================
-     İSTATİSTİKLER
+     İSTATİSTİK
 ===================================================== -->
 
 <section class="stats">
@@ -655,6 +812,22 @@ footer{
 
   </div>
 
+
+  <div class="stat">
+
+    <div
+      class="stat-number"
+      id="statFeedback"
+    >
+      0
+    </div>
+
+    <div class="stat-label">
+      Fikir / Yorum
+    </div>
+
+  </div>
+
 </section>
 
 
@@ -678,22 +851,55 @@ footer{
     </h2>
 
     <p>
-      2071 Mektup, insanların bugünden geleceğe
-      mektup, not, fotoğraf, ses, video ve belgeler
-      bırakabilmesi için tasarlanan dijital bir zaman
-      kapsülü projesidir.
+      2071 Mektup; insanların bugünden geleceğe
+      mektup, not, fotoğraf, ses, video ve belge
+      bırakabilmesi için oluşturulan dijital
+      zaman kapsülü projesidir.
     </p>
 
     <p>
-      Bugün sıradan görünen bir fotoğraf veya birkaç
-      satırlık bir mektup, yıllar sonra çok değerli
-      bir hatıraya dönüşebilir.
+      Bugün sıradan görünen bir fotoğraf,
+      birkaç satırlık bir mektup veya bir ses
+      kaydı, 45 yıl sonra çok değerli bir
+      tarihî hatıraya dönüşebilir.
     </p>
 
     <p>
-      Amaç yalnızca mesaj göndermek değil;
-      <b>bugünün insanından geleceğin insanına bir köprü
-      kurmak.</b>
+      Buradaki amaç yalnızca dosya saklamak değil;
+      <b>bugünün insanı ile geleceğin insanı
+      arasında bir köprü kurmaktır.</b>
+    </p>
+
+  </div>
+
+
+  <div class="card manifesto">
+
+    <span class="badge">
+      🕰️ BİZİM FİKRİMİZ
+    </span>
+
+    <h2>
+      2071'de bugünümüz konuşacak.
+    </h2>
+
+    <p>
+      İnsanlar 2071'de yalnızca büyük tarih
+      olaylarını değil, sıradan insanların
+      nasıl yaşadığını da merak edecek.
+    </p>
+
+    <p>
+      Ne düşündük?
+      Neyi sevdik?
+      Çocuklarımız için ne hayal ettik?
+      Nasıl bir Türkiye'de yaşadık?
+    </p>
+
+    <p>
+      <b>
+        Cevabı bugün biz bırakabiliriz.
+      </b>
     </p>
 
   </div>
@@ -702,121 +908,79 @@ footer{
 
 
 <!-- =====================================================
-     TARİHTEN ÖRNEKLER
+     TARİHSEL ANLAM
 ===================================================== -->
 
-<section
-  class="section"
-  id="examples"
->
+<section class="section">
 
   <span class="badge">
-    📜 GEÇMİŞTEN GELECEĞE
+    🇹🇷 26 AĞUSTOS
   </span>
 
   <h2 class="section-title">
-    Geçmişten kalan izler
+    Bir tarihten diğerine
   </h2>
 
   <p class="section-subtitle">
-    Geçmişte yazılmış mektuplar ve belgeler,
-    geleceğin insanına bugünü anlatıyor.
+    Geçmişten geleceğe uzanan sembolik bir tarih.
   </p>
 
 
-  <div class="examples">
+  <div class="timeline">
 
+    <div class="timeline-item">
 
-    <article class="example">
-
-      <div class="example-year">
-        1900'LER
+      <div class="timeline-year">
+        26 AĞUSTOS 1071
       </div>
 
       <h3>
-        Bir ailenin yıllar önce bıraktığı mektup
+        Malazgirt
       </h3>
 
       <p>
-        Eski bir sandıktan çıkan birkaç sayfalık
-        mektup, dönemin insanlarının yaşamını,
-        beklentilerini ve hayallerini anlatıyor.
+        Anadolu tarihinin dönüm noktalarından
+        biri olarak kabul edilen Malazgirt
+        Zaferi'nin tarihi.
       </p>
 
-      <div class="example-footer">
-        Arşiv örneği • Geçmişten bugüne
-      </div>
-
-    </article>
+    </div>
 
 
-    <article class="example">
+    <div class="timeline-item">
 
-      <div class="example-year">
-        1920'LER
+      <div class="timeline-year">
+        2026
       </div>
 
       <h3>
-        Bir fotoğrafın anlattığı hayat
+        Bizim zamanımız
       </h3>
 
       <p>
-        Yıllar önce çekilmiş bir fotoğraf,
-        bugün artık yaşamayan insanların
-        hikâyesini geleceğe taşıyor.
+        Bugünün insanı geleceğe kendi sözünü,
+        hatırasını ve hikâyesini bırakıyor.
       </p>
 
-      <div class="example-footer">
-        Fotoğraf arşivi • Tarihi belge
-      </div>
-
-    </article>
+    </div>
 
 
-    <article class="example">
+    <div class="timeline-item">
 
-      <div class="example-year">
-        1950'LER
+      <div class="timeline-year">
+        26 AĞUSTOS 2071
       </div>
 
       <h3>
-        Geleceğe yazılmış birkaç satır
+        Dosyalar açılıyor
       </h3>
 
       <p>
-        İnsanların gelecek yıllara dair hayalleri,
-        korkuları ve umutları bugün bize geçmişin
-        nasıl düşündüğünü gösteriyor.
+        Geleceğin insanı geçmişten bırakılan
+        dijital hatıralarla buluşuyor.
       </p>
 
-      <div class="example-footer">
-        Tarihi mektup • Arşiv
-      </div>
-
-    </article>
-
-
-    <article class="example">
-
-      <div class="example-year">
-        BUGÜN
-      </div>
-
-      <h3>
-        Şimdi sıra bizde.
-      </h3>
-
-      <p>
-        2026 yılında yazacağınız bir mektup,
-        2071 yılında bir insanın eline ulaşabilir.
-      </p>
-
-      <div class="example-footer">
-        Sıra sizde • Geleceğe bırak
-      </div>
-
-    </article>
-
+    </div>
 
   </div>
 
@@ -829,28 +993,27 @@ footer{
 
 <section class="section">
 
-  <div class="card idea">
+  <div class="card manifesto">
 
-    <div class="idea-title">
-      2071'de insanlar bugünümüzü merak edecek.
-    </div>
+    <span class="badge">
+      ✉️ SIRA SİZDE
+    </span>
 
-    <p>
-      Bugün nasıl yaşıyorduk?
-      Ne düşünüyorduk?
-      Nelerden korkuyorduk?
-      Çocuklarımız için ne hayal ediyorduk?
-    </p>
+    <h2>
+      Belki 2071'de biri sizin mektubunuzu okuyacak.
+    </h2>
 
     <p>
-      Cevabı bugün siz bırakabilirsiniz.
+      Ailenize, çocuklarınıza, torunlarınıza
+      veya gelecekte hiç tanımadığınız birine
+      bir şey söylemek ister misiniz?
     </p>
 
     <button
       class="primary action-button"
       onclick="goRegister()"
     >
-      ✉️ Ben de geleceğe bırakmak istiyorum
+      ✉️ Geleceğe Mektup Bırak
     </button>
 
   </div>
@@ -868,17 +1031,16 @@ footer{
 >
 
   <span class="badge">
-    🔐 GÜVENLİ GİRİŞ
+    🔐 GÜVENLİ HESAP
   </span>
 
   <h2 class="section-title">
-    Geleceğe bırakmak için hesabınızı oluşturun
+    Önce hesabınızı oluşturun
   </h2>
 
   <p class="section-subtitle">
-    Hesabınız olmadan kapsül oluşturulamaz.
-    Böylece bıraktığınız içerikler size ait
-    güvenli bir hesap altında tutulur.
+    Kapsül oluşturmak ve geleceğe dosya bırakmak
+    için kayıt olmanız gerekir.
   </p>
 
 
@@ -925,9 +1087,7 @@ footer{
         Kayıt Ol
       </button>
 
-      <div
-        id="registerMessage"
-      ></div>
+      <div id="registerMessage"></div>
 
     </section>
 
@@ -940,7 +1100,7 @@ footer{
     >
 
       <span class="badge">
-        🔐 HESABIM
+        🔑 HESABIM
       </span>
 
       <h2>
@@ -948,8 +1108,7 @@ footer{
       </h2>
 
       <p class="small">
-        Daha önce hesap oluşturduysanız
-        buradan giriş yapabilirsiniz.
+        Hesabınız varsa buradan giriş yapabilirsiniz.
       </p>
 
       <input
@@ -973,9 +1132,7 @@ footer{
         Giriş Yap
       </button>
 
-      <div
-        id="loginMessage"
-      ></div>
+      <div id="loginMessage"></div>
 
     </section>
 
@@ -985,7 +1142,7 @@ footer{
 
 
 <!-- =====================================================
-     ŞİFRE UYARISI
+     ŞİFRE
 ===================================================== -->
 
 <section
@@ -994,7 +1151,7 @@ footer{
 >
 
   <span class="badge">
-    🔑 GÜVENLİK
+    🔑 ŞİFRENİZ
   </span>
 
   <h2>
@@ -1003,16 +1160,17 @@ footer{
 
   <div class="warning">
 
-    <b>Önemli:</b>
+    <b>ÖNEMLİ</b>
 
     <p>
-      Sistem sizin için güvenli bir başlangıç
-      şifresi oluşturdu.
+      Sistem sizin için bir başlangıç şifresi
+      oluşturdu.
     </p>
 
     <p>
-      Bu şifreyi güvenli bir yere kaydedin.
-      Şifrenizi kaybetmemeniz önemlidir.
+      Bu şifreyi güvenli bir yerde saklayın.
+      Şifrenizi kaybetmeniz durumunda hesabınıza
+      erişim sorunları yaşayabilirsiniz.
     </p>
 
   </div>
@@ -1053,7 +1211,7 @@ footer{
 
 
 <!-- =====================================================
-     TEST KAPSÜLÜ
+     TEST
 ===================================================== -->
 
 <section
@@ -1137,7 +1295,7 @@ footer{
 >
 
   <span class="badge">
-    ✉️ İÇERİK EKLE
+    ✉️ İÇERİK
   </span>
 
   <h2>
@@ -1205,7 +1363,7 @@ footer{
 >
 
   <span class="badge">
-    🔒 KALICI KİLİT
+    🔒 KALICI MÜHÜR
   </span>
 
   <h2>
@@ -1238,13 +1396,14 @@ footer{
   <input
     id="unlockDate"
     type="datetime-local"
+    value="2071-08-26T00:00"
   >
 
   <button
     class="primary action-button"
     onclick="lockCapsule()"
   >
-    🔒 KALICI OLARAK KİTLE
+    🔒 KALICI OLARAK MÜHÜRLE
   </button>
 
   <div id="lockMessage"></div>
@@ -1287,33 +1446,138 @@ footer{
      FİKİR / YORUM
 ===================================================== -->
 
-<section class="section">
+<section
+  class="section"
+  id="feedback"
+>
 
-  <div class="card">
+  <span class="badge">
+    💬 FİKİR VE YORUM
+  </span>
 
-    <span class="badge">
-      💬 FİKRİNİZİ PAYLAŞIN
-    </span>
+  <h2 class="section-title">
+    2071 Mektup'u birlikte geliştirelim
+  </h2>
 
-    <h2>
-      2071 Mektup'u birlikte geliştirelim
-    </h2>
+  <p class="section-subtitle">
+    Mesaj gönderenler, yorum yapanlar ve fikir
+    verenler bu projenin bir parçasıdır.
+  </p>
 
-    <p>
-      Proje hakkında önerilerinizi, fikirlerinizi
-      ve gelecekte görmek istediğiniz özellikleri
-      paylaşabilirsiniz.
-    </p>
+
+  <div class="feedback-grid">
+
+
+    <div class="feedback-card">
+
+      <h3>
+        💡 Fikir Ver
+      </h3>
+
+      <p>
+        Uygulamaya hangi özelliklerin eklenmesini
+        istersiniz?
+      </p>
+
+      <button
+        class="secondary"
+        onclick="goFeedback('idea')"
+      >
+        Fikrimi Paylaş
+      </button>
+
+    </div>
+
+
+    <div class="feedback-card">
+
+      <h3>
+        💬 Yorum Yap
+      </h3>
+
+      <p>
+        Proje hakkında düşüncenizi ve önerinizi
+        paylaşabilirsiniz.
+      </p>
+
+      <button
+        class="secondary"
+        onclick="goFeedback('comment')"
+      >
+        Yorum Yap
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- FİKİR FORMU -->
+
+  <div
+    class="card"
+    id="feedbackFormCard"
+  >
+
+    <h3>
+      📝 Mesajınızı bırakın
+    </h3>
 
     <p class="small">
-      Mesaj, yorum ve fikir sistemi sonraki
-      aşamada platforma eklenecektir.
+      Adınız ve mesajınız gelecekte projenin
+      gelişmesine katkı sağlayabilir.
     </p>
+
+    <input
+      id="feedbackName"
+      placeholder="Adınız"
+      maxlength="100"
+    >
+
+    <select id="feedbackType">
+
+      <option value="idea">
+        💡 Fikir
+      </option>
+
+      <option value="comment">
+        💬 Yorum
+      </option>
+
+      <option value="suggestion">
+        🛠️ Öneri
+      </option>
+
+      <option value="message">
+        ✉️ Mesaj
+      </option>
+
+    </select>
+
+    <textarea
+      id="feedbackContent"
+      rows="5"
+      maxlength="2000"
+      placeholder="Mesajınızı yazın..."
+    ></textarea>
+
+    <button
+      class="primary action-button"
+      onclick="sendFeedback()"
+    >
+      Gönder
+    </button>
+
+    <div id="feedbackMessage"></div>
 
   </div>
 
 </section>
 
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
@@ -1324,6 +1588,10 @@ footer{
   Bugünü mühürle, geleceğe bırak.
 
   <br><br>
+
+  26 Ağustos 2071
+
+  <br>
 
   © 2026 2071 Mektup
 
@@ -1355,7 +1623,7 @@ let currentCapsuleId =
 
 
 /* =====================================================
-   YARDIMCI
+   KISA DOM
 ===================================================== */
 
 function $(id){
@@ -1363,21 +1631,29 @@ function $(id){
 }
 
 
+/* =====================================================
+   SCROLL
+===================================================== */
+
 function scrollToId(id){
 
   const element = $(id);
 
-  if(element){
-
-    element.scrollIntoView({
-      behavior:"smooth",
-      block:"start"
-    });
-
+  if(!element){
+    return;
   }
+
+  element.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
 
 }
 
+
+/* =====================================================
+   KAYDA YÖNLENDİR
+===================================================== */
 
 function goRegister(){
 
@@ -1385,16 +1661,31 @@ function goRegister(){
 
   setTimeout(() => {
 
-    const input =
-      $("registerName");
-
-    if(input){
-
-      input.focus();
-
-    }
+    $("registerName")?.focus();
 
   },500);
+
+}
+
+
+/* =====================================================
+   GERİ BİLDİRİM FORMUNA GİT
+===================================================== */
+
+function goFeedback(type){
+
+  scrollToId("feedbackFormCard");
+
+  setTimeout(() => {
+
+    if($("feedbackType")){
+      $("feedbackType").value =
+        type || "idea";
+    }
+
+    $("feedbackContent")?.focus();
+
+  },400);
 
 }
 
@@ -1409,10 +1700,12 @@ async function api(
 ){
 
   const headers = {
+
     "Content-Type":
       "application/json",
 
     ...(options.headers || {})
+
   };
 
 
@@ -1445,9 +1738,12 @@ async function api(
   }catch{
 
     data = {
+
       ok:false,
+
       error:
         "Sunucudan geçersiz cevap geldi."
+
     };
 
   }
@@ -1484,16 +1780,21 @@ function showMessage(
 
 
 /* =====================================================
-   GÜVENLİ HTML
+   HTML GÜVENLİĞİ
 ===================================================== */
 
 function escapeHtml(value){
 
   return String(value ?? "")
+
     .replaceAll("&","&amp;")
+
     .replaceAll("<","&lt;")
+
     .replaceAll(">","&gt;")
+
     .replaceAll('"',"&quot;")
+
     .replaceAll("'","&#039;");
 
 }
@@ -1527,6 +1828,7 @@ async function registerUser(){
     );
 
     return;
+
   }
 
 
@@ -1538,6 +1840,7 @@ async function registerUser(){
     );
 
     return;
+
   }
 
 
@@ -1553,10 +1856,14 @@ async function registerUser(){
         {
           method:"POST",
 
-          body:JSON.stringify({
-            name,
-            email
-          })
+          body:
+            JSON.stringify({
+
+              name,
+              email
+
+            })
+
         }
       );
 
@@ -1570,6 +1877,7 @@ async function registerUser(){
       );
 
       return;
+
     }
 
 
@@ -1580,74 +1888,41 @@ async function registerUser(){
     );
 
 
-    /*
-      Yeni API formatı:
-
-      result.data.credentials.password
-    */
-
-    const generatedPassword =
+    const password =
       result.data
         ?.credentials
         ?.password;
 
 
-    if(generatedPassword){
+    if(password){
 
       $("passwordCard")
         ?.classList
         .remove("hidden");
 
 
-      const passwordBox =
-        $("generatedPassword");
+      $("generatedPassword")
+        .textContent =
+        password;
 
 
-      if(passwordBox){
-
-        passwordBox.textContent =
-          generatedPassword;
-
-      }
+      $("loginEmail")
+        .value =
+        email;
 
 
-      const loginEmail =
-        $("loginEmail");
+      $("loginPassword")
+        .value =
+        password;
 
 
-      if(loginEmail){
-
-        loginEmail.value =
-          email;
-
-      }
-
-
-      const loginPassword =
-        $("loginPassword");
-
-
-      if(loginPassword){
-
-        loginPassword.value =
-          generatedPassword;
-
-      }
+      $("passwordCard")
+        ?.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
 
     }
-
-
-    /*
-      Kullanıcı kayıt olduktan sonra
-      şifre bölümünü görür.
-    */
-
-    $("passwordCard")
-      ?.scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-      });
-
 
   }catch(err){
 
@@ -1689,6 +1964,7 @@ async function loginUser(){
     );
 
     return;
+
   }
 
 
@@ -1704,10 +1980,14 @@ async function loginUser(){
         {
           method:"POST",
 
-          body:JSON.stringify({
-            email,
-            password
-          })
+          body:
+            JSON.stringify({
+
+              email,
+              password
+
+            })
+
         }
       );
 
@@ -1721,6 +2001,7 @@ async function loginUser(){
       );
 
       return;
+
     }
 
 
@@ -1856,19 +2137,22 @@ async function createTestCapsule(){
       await api(
         "/api/capsules",
         {
+
           method:"POST",
 
-          body:JSON.stringify({
+          body:
+            JSON.stringify({
 
-            title:
-              "2071 Mektup - Test Kapsülü",
+              title:
+                "2071 Mektup - Test Kapsülü",
 
-            description:
-              "Ücretsiz test kapsülü",
+              description:
+                "Ücretsiz test kapsülü",
 
-            mode:"test"
+              mode:"test"
 
-          })
+            })
+
         }
       );
 
@@ -1882,6 +2166,7 @@ async function createTestCapsule(){
       );
 
       return;
+
     }
 
 
@@ -1973,15 +2258,18 @@ async function createRealCapsule(){
       await api(
         "/api/capsules",
         {
+
           method:"POST",
 
-          body:JSON.stringify({
+          body:
+            JSON.stringify({
 
-            title,
-            description,
-            mode:"real"
+              title,
+              description,
+              mode:"real"
 
-          })
+            })
+
         }
       );
 
@@ -2103,26 +2391,32 @@ async function addEntry(){
 
     const result =
       await api(
+
         "/api/capsules/" +
         encodeURIComponent(
           currentCapsuleId
         ) +
         "/entries",
+
         {
+
           method:"POST",
 
-          body:JSON.stringify({
+          body:
+            JSON.stringify({
 
-            type,
-            title,
-            content,
+              type,
+              title,
+              content,
 
-            year:
-              new Date()
-                .getFullYear()
+              year:
+                new Date()
+                  .getFullYear()
 
-          })
+            })
+
         }
+
       );
 
 
@@ -2169,7 +2463,7 @@ async function addEntry(){
 
 
 /* =====================================================
-   KİLİT
+   KİLİTLE
 ===================================================== */
 
 async function lockCapsule(){
@@ -2220,7 +2514,11 @@ async function lockCapsule(){
     );
 
 
-  if(Number.isNaN(date.getTime())){
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
 
     showMessage(
       message,
@@ -2249,11 +2547,17 @@ async function lockCapsule(){
 
   const confirmed =
     confirm(
+
       "DİKKAT!\n\n" +
-      "Kapsül kalıcı olarak kilitlenecek.\n\n" +
-      "Açılış tarihi daha sonra değiştirilemeyecek.\n" +
+
+      "Kapsül kalıcı olarak mühürlenecek.\n\n" +
+
+      "Açılış tarihi değiştirilemeyecek.\n" +
+
       "Yeni içerik eklenemeyecek.\n\n" +
+
       "Devam etmek istiyor musunuz?"
+
     );
 
 
@@ -2265,28 +2569,34 @@ async function lockCapsule(){
 
 
   message.innerHTML =
-    "Kapsül kilitleniyor...";
+    "Kapsül mühürleniyor...";
 
 
   try{
 
     const result =
       await api(
+
         "/api/capsules/" +
         encodeURIComponent(
           currentCapsuleId
         ) +
         "/lock",
+
         {
+
           method:"POST",
 
-          body:JSON.stringify({
+          body:
+            JSON.stringify({
 
-            unlock_at:
-              date.toISOString()
+              unlock_at:
+                date.toISOString()
 
-          })
+            })
+
         }
+
       );
 
 
@@ -2295,7 +2605,7 @@ async function lockCapsule(){
       showMessage(
         message,
         result.data.error ||
-        "Kapsül kilitlenemedi."
+        "Kapsül mühürlenemedi."
       );
 
       return;
@@ -2304,10 +2614,15 @@ async function lockCapsule(){
 
 
     showMessage(
+
       message,
-      "🔒 Kapsül kalıcı olarak kilitlendi.\n" +
+
+      "🔒 Kapsül kalıcı olarak mühürlendi.\n" +
+
       "Açılış tarihi: " +
+
       result.data.capsule.unlock_at
+
     );
 
 
@@ -2344,9 +2659,7 @@ async function lockCapsule(){
 async function loadCapsules(){
 
   if(!token){
-
     return;
-
   }
 
 
@@ -2362,9 +2675,7 @@ async function loadCapsules(){
 
 
     if(!result.data.ok){
-
       return;
-
     }
 
 
@@ -2373,9 +2684,7 @@ async function loadCapsules(){
 
 
     if(!list){
-
       return;
-
     }
 
 
@@ -2431,16 +2740,14 @@ async function loadCapsules(){
               Açılış:
               ${
                 c.unlock_at
-                  ? escapeHtml(
-                      c.unlock_at
-                    )
+                  ? escapeHtml(c.unlock_at)
                   : "Belirlenmedi"
               }
             </p>
 
             ${
               locked
-                ? "<p>🔒 Kalıcı olarak kilitli.</p>"
+                ? "<p>🔒 Kalıcı olarak mühürlü.</p>"
                 : ""
             }
 
@@ -2496,14 +2803,19 @@ function logout(){
 
 
 /* =====================================================
-   2071 GERİ SAYIM
+   26 AĞUSTOS 2071 GERİ SAYIM
 ===================================================== */
 
 function tick(){
 
+  /*
+    Türkiye saati:
+    26 Ağustos 2071 00:00
+  */
+
   const target =
     new Date(
-      "2071-08-22T00:00:00+03:00"
+      "2071-08-26T00:00:00+03:00"
     );
 
 
@@ -2512,29 +2824,37 @@ function tick(){
     Date.now();
 
 
-  const days =
-    Math.max(
-      0,
-      Math.floor(
-        difference /
-        86400000
-      )
-    );
-
-
   const count =
     $("count");
 
 
-  if(count){
+  if(!count){
+    return;
+  }
+
+
+  if(difference <= 0){
 
     count.textContent =
-      days.toLocaleString(
-        "tr-TR"
-      ) +
-      " gün";
+      "DOSYALAR AÇILDI";
+
+    return;
 
   }
+
+
+  const days =
+    Math.floor(
+      difference /
+      86400000
+    );
+
+
+  count.textContent =
+    days.toLocaleString(
+      "tr-TR"
+    ) +
+    " gün";
 
 }
 
@@ -2548,81 +2868,219 @@ tick();
 
 
 /* =====================================================
-   GENEL İSTATİSTİK
+   GENEL İSTATİSTİKLER
 ===================================================== */
-
-/*
-   Backend'de /api/stats varsa
-   otomatik olarak kullanılır.
-
-   Endpoint henüz yoksa sayfa
-   hata vermeden 0 göstermeye devam eder.
-*/
 
 async function loadPublicStats(){
 
   try{
 
-    const result =
+    const response =
       await fetch(
         API + "/api/stats"
       );
 
 
-    if(!result.ok){
+    if(!response.ok){
+      return;
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      !data ||
+      !data.ok
+    ){
+      return;
+    }
+
+
+    if($("statLetters")){
+
+      $("statLetters")
+        .textContent =
+        Number(
+          data.letters || 0
+        ).toLocaleString(
+          "tr-TR"
+        );
+
+    }
+
+
+    if($("statFiles")){
+
+      $("statFiles")
+        .textContent =
+        Number(
+          data.files || 0
+        ).toLocaleString(
+          "tr-TR"
+        );
+
+    }
+
+
+    if($("statUsers")){
+
+      $("statUsers")
+        .textContent =
+        Number(
+          data.users || 0
+        ).toLocaleString(
+          "tr-TR"
+        );
+
+    }
+
+
+    if($("statFeedback")){
+
+      $("statFeedback")
+        .textContent =
+        Number(
+          data.feedback ||
+          data.comments ||
+          0
+        ).toLocaleString(
+          "tr-TR"
+        );
+
+    }
+
+
+  }catch(err){
+
+    console.log(
+      "İstatistikler şu anda kullanılamıyor."
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   FİKİR / YORUM GÖNDER
+===================================================== */
+
+async function sendFeedback(){
+
+  const name =
+    $("feedbackName")
+      ?.value
+      .trim();
+
+  const type =
+    $("feedbackType")
+      ?.value;
+
+  const content =
+    $("feedbackContent")
+      ?.value
+      .trim();
+
+  const message =
+    $("feedbackMessage");
+
+
+  if(!name){
+
+    showMessage(
+      message,
+      "Lütfen adınızı yazın."
+    );
+
+    return;
+
+  }
+
+
+  if(!content){
+
+    showMessage(
+      message,
+      "Lütfen mesajınızı yazın."
+    );
+
+    return;
+
+  }
+
+
+  message.innerHTML =
+    "Mesajınız gönderiliyor...";
+
+
+  try{
+
+    /*
+      Backend'e hazır.
+      Endpoint mevcut değilse
+      kullanıcıya anlaşılır bilgi verir.
+    */
+
+    const result =
+      await api(
+        "/api/feedback",
+        {
+
+          method:"POST",
+
+          body:
+            JSON.stringify({
+
+              name,
+              type,
+              content
+
+            })
+
+        }
+      );
+
+
+    if(!result.data.ok){
+
+      showMessage(
+        message,
+        result.data.error ||
+        "Mesaj gönderilemedi."
+      );
 
       return;
 
     }
 
 
-    const data =
-      await result.json();
+    showMessage(
+      message,
+      "💬 Mesajınız başarıyla gönderildi. Teşekkür ederiz."
+    );
 
 
-    if(
-      data &&
-      data.ok
-    ){
+    $("feedbackName").value =
+      "";
 
-      if($("statLetters")){
-
-        $("statLetters")
-          .textContent =
-          Number(
-            data.letters || 0
-          ).toLocaleString("tr-TR");
-
-      }
+    $("feedbackContent").value =
+      "";
 
 
-      if($("statFiles")){
+    loadPublicStats();
 
-        $("statFiles")
-          .textContent =
-          Number(
-            data.files || 0
-          ).toLocaleString("tr-TR");
-
-      }
-
-
-      if($("statUsers")){
-
-        $("statUsers")
-          .textContent =
-          Number(
-            data.users || 0
-          ).toLocaleString("tr-TR");
-
-      }
-
-    }
 
   }catch(err){
 
-    console.log(
-      "Genel istatistik şu anda kullanılamıyor."
+    showMessage(
+      message,
+
+      "Mesaj sistemi henüz sunucu tarafında "
+      +
+      "etkinleştirilmemiş olabilir."
+
     );
 
   }
@@ -2637,9 +3095,7 @@ async function loadPublicStats(){
 async function restoreSession(){
 
   if(!token){
-
     return;
-
   }
 
 
@@ -2735,7 +3191,6 @@ if(
 }
 
 </script>
-
 
 </body>
 </html>
