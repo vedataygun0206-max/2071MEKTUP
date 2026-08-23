@@ -285,8 +285,12 @@ saklamanız önerilir.
 </div>
 
 <div
-  class="password"
-  id="generatedPassword"
+  document
+  .getElementById(
+    "generatedPassword"
+  )
+  .textContent =
+    result.data.credentials.password;
 ></div>
 
 </section>
@@ -706,7 +710,7 @@ async function registerUser(){
 
     document
       .getElementById(
-        "generatedPassword"
+        "result.data.credentials.password"
       )
       .textContent =
         result.data.generated_password;
